@@ -49,4 +49,10 @@ public class Transaction implements Serializable{
 	public void setToAccountId(Long toAccountId) {
 		this.toAccountId = toAccountId;
 	}
+	public Long getBankEmployeeId() {
+		return bankEmployeeId;
+	}
+	public void setBankEmployeeId(Long bankEmployeeId) {
+		this.bankEmployeeId = bankEmployeeId;
+	}
 }

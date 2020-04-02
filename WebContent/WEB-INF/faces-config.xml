@@ -6,11 +6,20 @@
     version="2.0">
     
 	<application>
-		<message-bundle>ui.messages</message-bundle>
+		<message-bundle>c.c.resources.messages</message-bundle>
 		<resource-bundle>
-			<base-name>ui.messages</base-name>
+			<base-name>c.c.resources.messages</base-name>
 			<var>msgs</var>
 		</resource-bundle>
 	</application>
+       <navigation-rule>
+      <from-view-id>/sign.xhtml</from-view-id>
+      <navigation-case>
+         <from-outcome>index</from-outcome>
+         <to-view-id>/index.xhtml</to-view-id>
+      </navigation-case>
+   </navigation-rule>
+   
+	
 
 </faces-config>

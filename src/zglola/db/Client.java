@@ -12,7 +12,7 @@ public class Client implements Serializable {
 	private String userName;
 	private String password;
 	private String mobile;
-	private Date birthDate;
+	//private Date birthDate;
 	private String mail;
 	private String address;
 	private Long netSalary;
@@ -24,7 +24,9 @@ public class Client implements Serializable {
 
 	}
 
-	public Client(Long id, String name, String userName, String password, String mobile, Date birthDate, String mail,
+	public Client(Long id, String name, String userName, String password, String mobile
+			//, Date birthDate
+			, String mail,
 			String address, Long netSalary, Long bankId) {
 		super();
 		this.id = id;
@@ -32,7 +34,7 @@ public class Client implements Serializable {
 		this.userName = userName;
 		this.password = password;
 		this.mobile = mobile;
-		this.birthDate = birthDate;
+		//this.birthDate = birthDate;
 		this.mail = mail;
 		this.address = address;
 		this.netSalary = netSalary;
@@ -78,7 +80,7 @@ public class Client implements Serializable {
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
-
+/*
 	public Date getBirthDate() {
 		return birthDate;
 	}
@@ -86,7 +88,7 @@ public class Client implements Serializable {
 	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
 	}
-
+*/
 	public String getMail() {
 		return mail;
 	}

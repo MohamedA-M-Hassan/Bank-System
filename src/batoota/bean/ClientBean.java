@@ -44,9 +44,13 @@ public class ClientBean implements Serializable {
 		ClientService.insertClient(insertedClient);
 		return "index";
 	}
-
+	
 	public String login() {
-		return "home";
+		
+		if(
+				ClientService.getClientByEmailAndPassword(mail, password) != null)
+			return "clientHome";
+		return "index";
 	}
 
 	public String go() {

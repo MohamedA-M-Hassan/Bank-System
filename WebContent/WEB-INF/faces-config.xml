@@ -13,10 +13,10 @@
 		</resource-bundle>
 	</application>
        <navigation-rule>
-      <from-view-id>/index.xhtml</from-view-id>
+      <from-view-id>/sign.xhtml</from-view-id>
       <navigation-case>
-         <from-outcome>login</from-outcome>
-         <to-view-id>/login.xhtml</to-view-id>
+         <from-outcome>index</from-outcome>
+         <to-view-id>/index.xhtml</to-view-id>
       </navigation-case>
    </navigation-rule>
    

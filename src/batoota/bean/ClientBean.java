@@ -10,7 +10,7 @@ import javax.faces.bean.SessionScoped;
 import n3na3a.service.ClientService;
 import zglola.db.Client;
 
-//@SuppressWarnings("serial")
+
 @SuppressWarnings("serial")
 @ManagedBean(name = "client")
 // @ViewScoped
@@ -42,7 +42,7 @@ public class ClientBean implements Serializable {
 		// insertedClient.setAddress(address);
 		// insertedClient.setBirthDate(birthDate);
 		ClientService.insertClient(insertedClient);
-		return "login";
+		return "index";
 	}
 
 	public String login() {

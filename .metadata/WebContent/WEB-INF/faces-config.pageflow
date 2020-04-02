@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pageflow:Pageflow xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15858216735820" configfile="/EjadaBank/WebContent/WEB-INF/faces-config.xml"/>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15858216735820" configfile="/EjadaBank/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="sign.xhtml" id="pf15858474656843" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf15858474656844" path="/sign.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" id="pf15858474656845" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf15858474656844" path="/index.xhtml"/>
+  <links id="pf15858474656844" target="pf15858474656845" source="pf15858474656843" outcome="index"/>
+</pageflow:Pageflow>

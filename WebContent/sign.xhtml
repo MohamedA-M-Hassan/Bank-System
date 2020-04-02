@@ -7,6 +7,7 @@
 	<title>Banking System</title>
 	<h:outputStylesheet library="css" name="bootstrap.css" />
 	<h:outputStylesheet library="css" name="signup.css" />
+	<h:outputScript name="validate.js" library="javascript" target="head" />
 </h:head>
 <body>
 	<div class="main-w3layouts">
@@ -19,32 +20,33 @@
 				<h:form>
 					<!-- h:panelGroup columns="2"--> 
 						<h:outputText value="#{msgs.name}" style="color:white"></h:outputText>
-						<p:inputText style="color:white" value="#{client.name}" placeholder="Name" class="text"></p:inputText>
+						<p:inputText  required="true" style="color:white" value="#{client.name}" placeholder="Name" class="text"></p:inputText>
 						<p:spacer />
 						<h2>  </h2>
 						<h:outputText value="#{msgs.username}" style="color:white"></h:outputText>
-						<p:inputText style="color:white" value="#{client.userName}" placeholder="Username" class="text"></p:inputText>
+						<p:inputText  required="true" style="color:white" value="#{client.userName}" placeholder="Username" class="text"></p:inputText>
 						<p:spacer />
 						<h2>  </h2>
 						<h:outputText value="#{msgs.password}" style="color:white"></h:outputText>
-						<p:password placeholder="password" style="color:white" value="#{client.password}" class="text"></p:password>
+						<p:password   required="true" placeholder="password" style="color:white" value="#{client.password}" class="text"></p:password>
 						<p:spacer />
 						<h2>  </h2>
 						<p:spacer />
 						<h2>  </h2>
 						<h:outputText value="Email" style="color:white"></h:outputText>
-						<p:inputText style="color:white" value="#{client.mail}" placeholder="Mail" class="text"></p:inputText>
+						<p:inputText   required="true" id="email" requiredMessage="Please enter your email address." validatorMessage="Invalid email format" style="color:white" value="#{client.mail}" placeholder="Mail" class="text">
+							<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+						</p:inputText>
+						<p:message for="email" />
 						<h:outputText value="Address" style="color:white"></h:outputText>
-						<p:inputText style="color:white" value="#{client.address}" placeholder="Address" class="text"></p:inputText>
+						<p:inputText   required="true" style="color:white" value="#{client.address}" placeholder="Address" class="text"></p:inputText>
 						<p:spacer />
 						<h2>  </h2>
 						<h:outputText value="#{msgs.phone_no}" style="color:white"></h:outputText>
-						<p:inputText style="color:white" value="#{client.mobile}" placeholder="Mobile Number" class="text"></p:inputText>
-						
+						<p:inputText  required="true"  onkeypress="return checkDigit(event);" style="color:white" value="#{client.mobile}" placeholder="Mobile Number" class="text"></p:inputText>
 						<h:commandButton value="Signup" action="#{client.addClient()}"></h:commandButton>
 					<!-- /h:panelGroup -->
 				</h:form>
-				
 			</div>
 		</div>
 	</div>

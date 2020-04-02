@@ -13,27 +13,24 @@
 		<div style="text-align: center;">
 			<p:graphicImage width="5%" height="5%" name="/images/logo4.png" />
 		</div>
-		<h1>Sign up</h1>
+		<h1>Banking System</h1>
 		<div class="main-agileinfo">
 			<div class="agileits-top">
 				<h:form>
 					<h:panelGroup columns="2">
-						<p:inputText style="color:white" value="#{client.name}" placeholder="Name" class="text"></p:inputText>
+
+						<p:inputText style="color:white" value="#{client.name}" placeholder="Username" class="text"></p:inputText>
 						<p:spacer />
-						<p:inputText style="color:white" value="#{client.userName}" placeholder="Username" class="text"></p:inputText>
-						<p:spacer />
-						<p:inputText style="color:white" value="#{client.address}" placeholder="Address" class="text"></p:inputText>
-						<p:spacer />
-						<p:inputText style="color:white" value="#{client.mobile}" placeholder="Mobile Number" class="text"></p:inputText>
-						<p:spacer />
-						<p:inputText style="color:white" value="#{client.mail}" placeholder="Mail" class="text"></p:inputText>
 						<p:spacer />
 						<p:password placeholder="password" style="color:white" value="#{client.password}" class="text"></p:password>
 
-						<h:commandButton value="Signup" action="#{client.addClient()}"></h:commandButton>
+						<h:commandButton value="Login" action="#{client.login}"></h:commandButton>
 					</h:panelGroup>
 				</h:form>
-				
+				<p>
+					Don't have an Account?
+					<a href="/index.xhtml"> Signup Now!</a>
+				</p>
 			</div>
 		</div>
 	</div>

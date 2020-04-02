@@ -13,5 +13,11 @@ public class Bank implements Serializable{
 	public void setId(Long id) {
 		this.id = id;
 	}
+	public String getBranchAddress() {
+		return branchAddress;
+	}
+	public void setBranchAddress(String branchAddress) {
+		this.branchAddress = branchAddress;
+	}
 	
 }

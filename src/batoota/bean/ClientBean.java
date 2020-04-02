@@ -1,12 +1,21 @@
-package zglola.db;
+package batoota.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
-// After Hibernate
-// please add @Entity
-// and @Table .. 
-public class Client implements Serializable {
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+
+import n3na3a.service.ClientService;
+import zglola.db.Client;
+
+//@SuppressWarnings("serial")
+@SuppressWarnings("serial")
+@ManagedBean(name = "client")
+// @ViewScoped
+@SessionScoped
+public class ClientBean implements Serializable {
 	private Long id;
 	private String name;
 	private String userName;
@@ -17,28 +26,34 @@ public class Client implements Serializable {
 	private String address;
 	private Long netSalary;
 	private Long bankId;
-	// private Long employeeId;
-	// private Long type;
+	private ArrayList<Client> clientList;
 
-	public Client() {
-
+	public ClientBean() {
 	}
 
-	public Client(Long id, String name, String userName, String password, String mobile, Date birthDate, String mail,
-			String address, Long netSalary, Long bankId) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.userName = userName;
-		this.password = password;
-		this.mobile = mobile;
-		this.birthDate = birthDate;
-		this.mail = mail;
-		this.address = address;
-		this.netSalary = netSalary;
-		this.bankId = bankId;
+	public String addClient() {
+		Client insertedClient = new Client();
+		insertedClient.setName(name);
+		// insertedClient.setMobile(mobile);
+		insertedClient.setUserName(userName.toLowerCase());
+		insertedClient.setPassword(password);
+		// insertedClient.setNetSalary(netSalary);
+		insertedClient.setMail(mail);
+		// insertedClient.setAddress(address);
+		// insertedClient.setBirthDate(birthDate);
+		ClientService.insertClient(insertedClient);
+		return "login";
 	}
 
+	public String login() {
+		return "home";
+	}
+
+	public String go() {
+		return "signup";
+	}
+
+	/****************************/
 	public Long getId() {
 		return id;
 	}
@@ -118,14 +133,12 @@ public class Client implements Serializable {
 	public void setBankId(Long bankId) {
 		this.bankId = bankId;
 	}
-	/*
-	 * public Long getEmployeeId() { return employeeId; }
-	 * 
-	 * public void setEmployeeId(Long employeeId) { this.employeeId = employeeId; }
-	 * 
-	 * public Long getType() { return type; }
-	 * 
-	 * public void setType(Long type) { this.type = type; }
-	 * 
-	 */
+
+	public ArrayList<Client> getClientList() {
+		return clientList;
+	}
+
+	public void setClientList(ArrayList<Client> clientList) {
+		this.clientList = clientList;
+	}
 }

@@ -5,7 +5,9 @@ import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import n3na3a.service.AccountService;
 import n3na3a.service.ClientService;
+import zglola.db.Account;
 import zglola.db.BankEmployee;
 import zglola.db.Client;
 
@@ -17,15 +19,20 @@ public class User implements Serializable {
 	private String mail;
 	private Client client;
 	private BankEmployee bankEmployee;
-
+	private Account account;
+	private static Long accountNumber=1000000L;
 	public User() {
 		type = 1;
 		client = new Client();
 		bankEmployee = new BankEmployee();
+		account = new Account();
 	}
 
 	public Long handleClientId() {
 		return (long) ClientService.getNoOfClientsInDbToHandleID();
+	}
+	public Long handleAccountId() {
+		return (long) AccountService.getNoOfAccountInDbToHandleID();
 	}
 
 	public Long handleBankEmployeeId() {
@@ -34,17 +41,32 @@ public class User implements Serializable {
 	}
 
 	public String addBankEmployee() {
-		// TO_DO
+		// TODO
 		return "index";
 	}
-
+	
+	//sign
 	public String addClient() {
 
+		//TODO : Check if unique or already taken
 		client.setId(handleClientId());
 		ClientService.insertClient(client);
+		addAccount(client.getId());
 		return "index";
 	}
-
+	
+	public void addAccount(Long clientId)
+	{
+		account.setId(handleAccountId());
+		account.setAmount(0L);
+		account.setClientId(clientId);
+		account.setAccountNumber(generateAccountNumber());
+		
+	}
+	public Long generateAccountNumber() {
+		return accountNumber += 1;
+		 
+	}
 	public String login() {
 		// TO_DO save session
 

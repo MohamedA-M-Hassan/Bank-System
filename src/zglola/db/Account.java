@@ -6,11 +6,13 @@ public class Account implements Serializable {
 	private Long id;
 	private Long amount;
 	private Long clientId;
-	
-	public Account(Long id, Long amount, Long clientId) {
+	private Long accountNumber;
+	public Account() {}
+	public Account(Long id, Long amount, Long clientId,Long accountNo) {
 		this.clientId = id;
 		this.amount = amount;
 		this.clientId = clientId;
+		this.setAccountNumber(accountNo);
 	}
 	
 	
@@ -31,5 +33,15 @@ public class Account implements Serializable {
 	}
 	public void setClientId(Long clientId) {
 		this.clientId = clientId;
+	}
+
+
+	public Long getAccountNumber() {
+		return accountNumber;
+	}
+
+
+	public void setAccountNumber(Long accountNumber) {
+		this.accountNumber = accountNumber;
 	}
 }

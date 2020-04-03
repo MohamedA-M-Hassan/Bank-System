@@ -22,11 +22,11 @@ xmlns:p="http://primefaces.org/ui">
 			<div class="agileits-top">
 				<h:form>
 					<h:panelGroup columns="2">
-						<p:inputText style="color:white" value="#{client.mail}" placeholder="Username" class="text"></p:inputText>
+						<p:inputText style="color:white" value="#{user.mail}" placeholder="Username" class="text"></p:inputText>
 						<p:spacer />
 						<p:spacer />
-						<p:password placeholder="password" style="color:white" value="#{client.password}" class="text"></p:password>
-						<h:commandButton value="Login" action="#{client.login()}"></h:commandButton>
+						<p:password placeholder="password" style="color:white" value="#{user.password}" class="text"></p:password>
+						<h:commandButton value="Login" action="#{user.login()}"></h:commandButton>
 					</h:panelGroup>
 				</h:form>
 				<p>	Don't have an Account?

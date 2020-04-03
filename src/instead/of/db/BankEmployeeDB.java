@@ -13,18 +13,26 @@ public class BankEmployeeDB implements Serializable {
 	public BankEmployeeDB() {
 	}
 
-	@SuppressWarnings("deprecation")
 	public static ArrayList<BankEmployee> getEmployeeList() {
+
 		if (employeeList.size() < 3) {
-			employeeList.add(new BankEmployee(0L, "Tison", "tito", "123@S", "01144181789"
-			// ,new Date ("1-4-1950")
-					, "accountant", 1L));
-			employeeList.add(new BankEmployee(new Long(1), "Boso", "Iron", "123456A#", "0123456798"
-			// ,new Date ("2-4-1964")
-					, "manager", new Long(1)));
-			employeeList.add(new BankEmployee(new Long(2), "soka", "kyfykda", "987@H", "0129746543"
-			// ,new Date ("1-4-1980")
-					, "sika", new Long(2)));
+			BankEmployee bankEmployee1 = new BankEmployee();
+			BankEmployee bankEmployee2 = new BankEmployee();
+			BankEmployee bankEmployee3 = new BankEmployee();
+			//////////////////////////////////////////
+			bankEmployee1.setId(0L);
+			bankEmployee1.setName("Tison");
+			bankEmployee1.setUserName("tito");
+			bankEmployee1.setMobile("01144181789");
+			bankEmployee1.setPosition("accountant");
+			bankEmployee1.setBankId(1L);
+			bankEmployee1.setPassword("123@S");
+			/////////////////////////////////////////
+
+			employeeList.add(bankEmployee1);
+			employeeList.add(bankEmployee2);
+			employeeList.add(bankEmployee3);
+
 		}
 		return employeeList;
 	}

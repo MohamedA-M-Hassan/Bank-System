@@ -12,7 +12,7 @@
 			<var>msgs</var>
 		</resource-bundle>
 	</application>
-       <navigation-rule>
+    <navigation-rule>
       <from-view-id>/sign.xhtml</from-view-id>
       <navigation-case>
          <from-outcome>index</from-outcome>
@@ -20,6 +20,13 @@
       </navigation-case>
    </navigation-rule>
    
+   <navigation-rule>
+      <from-view-id>/index.xhtml</from-view-id>
+      <navigation-case>
+         <from-outcome>clientHome</from-outcome>
+         <to-view-id>/account.xhtml</to-view-id>
+      </navigation-case>
+   </navigation-rule>
 	
 
 </faces-config>

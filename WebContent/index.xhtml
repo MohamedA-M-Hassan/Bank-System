@@ -22,21 +22,18 @@ xmlns:p="http://primefaces.org/ui">
 			<div class="agileits-top">
 				<h:form>
 					<h:panelGroup columns="2">
-
-						<p:inputText style="color:white" value="#{client.name}" placeholder="Username" class="text"></p:inputText>
+						<p:inputText style="color:white" value="#{client.mail}" placeholder="Username" class="text"></p:inputText>
 						<p:spacer />
 						<p:spacer />
 						<p:password placeholder="password" style="color:white" value="#{client.password}" class="text"></p:password>
-						<h:commandButton value="Login" action="#{client.login}"></h:commandButton>
+						<h:commandButton value="Login" action="#{client.login()}"></h:commandButton>
 					</h:panelGroup>
 				</h:form>
-				<p>
-					Don't have an Account?
+				<p>	Don't have an Account?
 					<a href="/EjadaBank/sign.xhtml"> Signup Now!</a>
 				</p>
 			</div>
 		</div>
 	</div>
 </body>
-
 </html>

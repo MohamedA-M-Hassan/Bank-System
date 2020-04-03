@@ -10,7 +10,7 @@ import javax.faces.bean.SessionScoped;
 import n3na3a.service.ClientService;
 import zglola.db.Client;
 
-//@SuppressWarnings("serial")
+
 @SuppressWarnings("serial")
 @ManagedBean(name = "client")
 // @ViewScoped
@@ -33,26 +33,35 @@ public class ClientBean implements Serializable {
 
 	public String addClient() {
 		Client insertedClient = new Client();
+		insertedClient.setId(handleId());
 		insertedClient.setName(name);
-		// insertedClient.setMobile(mobile);
+		insertedClient.setMobile(mobile);
 		insertedClient.setUserName(userName.toLowerCase());
 		insertedClient.setPassword(password);
-		// insertedClient.setNetSalary(netSalary);
+		//insertedClient.setNetSalary(netSalary);
 		insertedClient.setMail(mail);
-		// insertedClient.setAddress(address);
+		 insertedClient.setAddress(address);
 		// insertedClient.setBirthDate(birthDate);
 		ClientService.insertClient(insertedClient);
-		return "login";
+		return "index";
 	}
-
+	
+	
 	public String login() {
-		return "home";
+		
+		if(ClientService.getClientByEmailAndPassword(mail, password) != null)
+			return "clientHome";
+		return "index";
 	}
 
 	public String go() {
 		return "signup";
 	}
-
+	
+	public Long handleId()
+	{
+		return  (long) ClientService.getNoOfClientsInDbToHandleID();
+	}
 	/****************************/
 	public Long getId() {
 		return id;

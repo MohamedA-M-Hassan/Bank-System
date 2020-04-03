@@ -7,6 +7,12 @@ public class Account implements Serializable {
 	private Long amount;
 	private Long clientId;
 	
+	public Account(Long id, Long amount, Long clientId) {
+		this.clientId = id;
+		this.amount = amount;
+		this.clientId = clientId;
+	}
+	
 	
 	public Long getId() {
 		return id;

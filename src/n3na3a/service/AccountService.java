@@ -9,7 +9,7 @@ import zglola.db.Account;
 
 public class AccountService implements Serializable {
 
-	public static void addAccount(Account account) {
+	/*public static void addAccount(Account account) {
 
 		AccountDB.getTransactionList().add(account);
 	}
@@ -17,5 +17,5 @@ public class AccountService implements Serializable {
 	public static void updateAccount(Account account) {
 
 	}
-
+*/
 }

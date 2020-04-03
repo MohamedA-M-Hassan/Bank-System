@@ -17,8 +17,13 @@
 		<h1>Sign up</h1>
 		<div class="main-agileinfo">
 			<div class="agileits-top">
-				<h:form>
-					<!-- h:panelGroup columns="2"--> 
+				<h:form id="select">
+						<h:selectOneRadio value="#{user.type}" id="userRadio">
+							<f:selectItem itemValue = "1"  itemLabel = "Client" />
+							<f:selectItem itemValue = "2"  itemLabel = "Employee" />
+							<f:ajax event= "change" render = "select" execute="select"/>
+						</h:selectOneRadio>
+					<h:panelGroup columns="2" id="client" rendered="#{user.type == 1}"> 
 						<h:outputText value="#{msgs.name}" style="color:white"></h:outputText>
 						<p:inputText  required="true" style="color:white" value="#{client.name}" placeholder="Name" class="text"></p:inputText>
 						<p:spacer />
@@ -31,13 +36,13 @@
 						<p:password   required="true" placeholder="password" style="color:white" value="#{client.password}" class="text"></p:password>
 						<p:spacer />
 						<h2>  </h2>
-						<p:spacer />
-						<h2>  </h2>
 						<h:outputText value="Email" style="color:white"></h:outputText>
 						<p:inputText   required="true" id="email" requiredMessage="Please enter your email address." validatorMessage="Invalid email format" style="color:white" value="#{client.mail}" placeholder="Mail" class="text">
 							<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 						</p:inputText>
 						<p:message for="email" />
+						<p:spacer />
+						<h2>  </h2>
 						<h:outputText value="Address" style="color:white"></h:outputText>
 						<p:inputText   required="true" style="color:white" value="#{client.address}" placeholder="Address" class="text"></p:inputText>
 						<p:spacer />
@@ -45,7 +50,10 @@
 						<h:outputText value="#{msgs.phone_no}" style="color:white"></h:outputText>
 						<p:inputText  required="true"  onkeypress="return checkDigit(event);" style="color:white" value="#{client.mobile}" placeholder="Mobile Number" class="text"></p:inputText>
 						<h:commandButton value="Signup" action="#{client.addClient()}"></h:commandButton>
-					<!-- /h:panelGroup -->
+					</h:panelGroup>
+					<h:panelGroup columns="2" id="emp" rendered="#{user.type == 2}"> 
+						<h:outputText value="#{msgs.name}" style="color:white"></h:outputText>
+					</h:panelGroup>
 				</h:form>
 			</div>
 		</div>

@@ -33,22 +33,23 @@ public class ClientBean implements Serializable {
 
 	public String addClient() {
 		Client insertedClient = new Client();
+		insertedClient.setId(handleId());
 		insertedClient.setName(name);
-		// insertedClient.setMobile(mobile);
+		insertedClient.setMobile(mobile);
 		insertedClient.setUserName(userName.toLowerCase());
 		insertedClient.setPassword(password);
-		// insertedClient.setNetSalary(netSalary);
+		//insertedClient.setNetSalary(netSalary);
 		insertedClient.setMail(mail);
-		// insertedClient.setAddress(address);
+		 insertedClient.setAddress(address);
 		// insertedClient.setBirthDate(birthDate);
 		ClientService.insertClient(insertedClient);
 		return "index";
 	}
 	
+	
 	public String login() {
 		
-		if(
-				ClientService.getClientByEmailAndPassword(mail, password) != null)
+		if(ClientService.getClientByEmailAndPassword(mail, password) != null)
 			return "clientHome";
 		return "index";
 	}
@@ -56,7 +57,11 @@ public class ClientBean implements Serializable {
 	public String go() {
 		return "signup";
 	}
-
+	
+	public Long handleId()
+	{
+		return  (long) ClientService.getNoOfClientsInDbToHandleID();
+	}
 	/****************************/
 	public Long getId() {
 		return id;

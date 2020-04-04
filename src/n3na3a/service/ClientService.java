@@ -13,9 +13,9 @@ public class ClientService implements Serializable {
 		ClientDB.getClientList().add(client);
 	}
 
-	public static Client getClientByEmailAndPassword(String mail, String pass) {
+	public static Client getClientByUsernameAndPassword(String username, String pass) {
 		for (Client c : ClientDB.getClientList()) {
-			if (c.getMail().toLowerCase().equals(mail.toLowerCase()) && c.getPassword().equals(pass))
+			if (c.getUserName().toLowerCase().equals(username.toLowerCase()) && c.getPassword().equals(pass))
 				return c;
 		}
 		return null;

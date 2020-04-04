@@ -3,6 +3,7 @@ package zglola.db;
 import java.io.Serializable;
 import java.util.Date;
 
+@SuppressWarnings("serial")
 public class Transaction implements Serializable {
 	private Long id;
 	private Date transactionDate;
@@ -11,6 +12,7 @@ public class Transaction implements Serializable {
 	private Long fromAccountId;
 	private Long toAccountId;
 	private Long bankEmployeeId;
+	private Long amount;
 
 	public Long getId() {
 		return id;
@@ -68,8 +70,11 @@ public class Transaction implements Serializable {
 		this.bankEmployeeId = bankEmployeeId;
 	}
 
-	public void setToAccountFrom(long l) {
-		// TODO Auto-generated method stub
+	public Long getAmount() {
+		return amount;
+	}
 
+	public void setAmount(Long amount) {
+		this.amount = amount;
 	}
 }

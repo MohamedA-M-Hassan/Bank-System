@@ -2,10 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml" 
-xmlns:h="http://java.sun.com/jsf/html" 
-xmlns:f="http://java.sun.com/jsf/core" 
-xmlns:p="http://primefaces.org/ui">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui">
 
 <h:head>
 	<title>Banking System</title>
@@ -21,16 +18,18 @@ xmlns:p="http://primefaces.org/ui">
 		<div class="main-agileinfo">
 			<div class="agileits-top">
 				<h:form>
-				<p:messages id="msgs" />
+					<p:messages id="msgs" />
 					<h:panelGroup columns="2">
-						<p:inputText  style="color:white" value="#{user.mail}" placeholder="Username" class="text"></p:inputText>
+						<p:inputText style="color:white" value="#{user.username}" placeholder="Username" class="text">
+						</p:inputText>
 						<p:spacer />
 						<p:spacer />
-						<p:password  placeholder="password" style="color:white" value="#{user.password}" class="text"></p:password>
+						<p:password placeholder="password" style="color:white" value="#{user.password}" class="text"></p:password>
 						<h:commandButton value="Login" action="#{user.login()}"></h:commandButton>
 					</h:panelGroup>
 				</h:form>
-				<p>	Don't have an Account?
+				<p>
+					Don't have an Account?
 					<a href="/EjadaBank/sign.xhtml"> Signup Now!</a>
 				</p>
 			</div>

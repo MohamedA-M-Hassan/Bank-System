@@ -6,31 +6,40 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
 
+import n3na3a.service.AccountService;
 import n3na3a.service.ClientService;
+import zglola.db.Account;
 import zglola.db.BankEmployee;
 import zglola.db.Client;
 
 @SessionScoped
 @ManagedBean(name = "user")
-public class User extends HttpServlet implements Serializable {
+public class User implements Serializable {
 	private int type; // 1 = client or 2 = bank employee
 	private String password;
-	private String mail;
+	private String username;
 	private Client client;
 	private BankEmployee bankEmployee;
+	private Account account;
+	private static Long accountNumber = 1000000L;
 
 	public User() {
 		type = 1;
 		client = new Client();
 		bankEmployee = new BankEmployee();
-		HttpSession session2 = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+
+		account = new Account();
+
 	}
 
 	public Long handleClientId() {
 		return (long) ClientService.getNoOfClientsInDbToHandleID();
+	}
+
+	public Long handleAccountId() {
+		return (long) AccountService.getNoOfAccountInDbToHandleID();
 	}
 
 	public Long handleBankEmployeeId() {
@@ -39,15 +48,19 @@ public class User extends HttpServlet implements Serializable {
 	}
 
 	public String addBankEmployee() {
-		// TO_DO
+		// TODO
 		return "index";
 	}
 
+	// sign
 	public String addClient() {
 		validateClient(client);
 
+		// TODO : Check if unique or already taken
 		client.setId(handleClientId());
 		ClientService.insertClient(client);
+
+		addAccount(client.getId());
 
 		return "index";
 
@@ -63,16 +76,39 @@ public class User extends HttpServlet implements Serializable {
 
 	}
 
+	public void addAccount(Long clientId) {
+		account.setId(handleAccountId());
+		account.setBalance(0L);
+		account.setClientId(clientId);
+		account.setAccountNumber(generateAccountNumber());
+
+	}
+
+	public Long generateAccountNumber() {
+		return accountNumber += 1;
+
+	}
+
 	public String login() {
-		// TO_DO save session
 
-		if (ClientService.getClientByEmailAndPassword(mail, password) != null)
-
+		Client client = ClientService.getClientByUsernameAndPassword(username, password);
+		if (client != null) {
+			HttpSession session = SessionUtils.getSession();
+			session.setAttribute("client", client);
 			return "clientHome";
-		else {
-			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(null, new FacesMessage("User name or Password is not correct please try again."));
 		}
+		FacesContext.getCurrentInstance().addMessage(
+				null,
+				new FacesMessage(FacesMessage.SEVERITY_WARN,
+						"Incorrect Username and Passowrd",
+						"Please enter correct username and Password"));
+
+		return "index";
+	}
+
+	public String logout() {
+		HttpSession session = SessionUtils.getSession();
+		session.invalidate();
 
 		return "index";
 	}
@@ -117,12 +153,12 @@ public class User extends HttpServlet implements Serializable {
 		this.password = password;
 	}
 
-	public String getMail() {
-		return mail;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setMail(String mail) {
-		this.mail = mail;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 }

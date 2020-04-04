@@ -2,21 +2,131 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns = "http://www.w3.org/1999/xhtml"   
-xmlns:h = "http://java.sun.com/jsf/html"
-xmlns:f = "http://java.sun.com/jsf/core">
-   
-   <h:head>
-      <title>Ejada Deals</title>
-      <h:outputStylesheet library="css" name="bootstrap.css"/>
-      		 	
-   </h:head>
-   
-   <h:body> 
-   		<h:form id="sign">
-   			
-			welcome from Account   			
-			<h:commandButton action="index"></h:commandButton>			
-    	</h:form>
-   </h:body>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Ejada Deals</title>
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+</h:head>
+
+<h:body>
+	<nav class="navbar" style="background-color:#76b852">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#">WebSiteName</a>
+		</div>
+		<ul class="nav navbar-nav">
+			<li class="active"><a href="#">#{account.client.name}</a></li>
+			<li><a href="#">Page 1</a></li>
+			<li><a href="#">Page 2</a></li>
+		</ul>
+		<ul class="nav navbar-nav navbar-right">
+			<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
+					Logout</a></li>
+		</ul>
+	</div>
+	</nav>
+
+
+
+	<h:form id="accountFormId">
+
+		<div>
+			<h:commandLink action="#{account.logout}" value="Logout"></h:commandLink>
+			<h2>welcome from Account</h2>
+		</div>
+		<div>
+			<h:outputText value="Account Number: "></h:outputText>
+			<h:outputText value="#{account.account.accountNumber}"></h:outputText>
+			<h:outputText value="Your Balance: "></h:outputText>
+			<h:outputText value="#{account.account.balance}"></h:outputText>
+			<h:outputText value="Your salary: "></h:outputText>
+			<h:outputText value="#{account.client.netSalary}"></h:outputText>
+
+
+
+		</div>
+		<div>
+			<h:commandButton
+				value="#{msgs.plusSign} &nbsp; #{msgs.newTransaction} " class="btn"
+				action="#{account.dialogTransaction()}">
+				<f:ajax render="accountFormId"
+					onevent="function(e){if(e.status == 'success') PF('transactionDialog').show();}"></f:ajax>
+			</h:commandButton>
+
+		</div>
+		<p:dialog header="#{msgs.newTransaction}" id="transactionDialogId"
+			widgetVar="transactionDialog" modal="true" width="979px"
+			minHeight="220">
+			<h:panelGroup id="transactionPanelGroupId">
+				<table width="100%">
+					<tr>
+						<th width="20%">#{msgs.reciever} :</th>
+						<td width="20%"><h:inputText value="#{account.transaction.toAccountId}" /></td>
+					</tr>
+					<tr>
+						<th width="20%">#{msgs.amount} :</th>
+						<td width="20%"><h:inputText 
+							value="#{account.transaction.amount}" /></td>
+					
+					</tr>
+					<tr>
+						<th width="20%">#{msgs.description} :</th>
+						<td width="20%"><h:inputText 
+							value="#{account.transaction.description}" /></td>
+					</tr>
+					<tr>
+						<h:commandButton value = "#{msgs.save}" action="#{account.addTransaction()}">
+							<f:ajax render="accountFormId" excute="accountFormId"/> 
+						</h:commandButton>
+					</tr>
+				</table>
+			</h:panelGroup>
+		</p:dialog>
+		<!-- the table  -->
+		<h:dataTable id="transactionTable"
+			value="#{account.transactionList}" var="row"
+			captionStyle="font-size: 0.95em; font-style:italic"
+			style="width: 500px;color: black">
+
+			<f:facet name="caption">Transactions</f:facet>
+
+
+			<!-- desc -->
+			<h:column headerClass="columnHeader" footerClass="columnFooter">
+				<f:facet name="header">Description</f:facet>
+				<h:outputText value="#{row.description}" />
+			</h:column>
+
+			<!-- toAccountId -->
+			<h:column headerClass="columnHeader" footerClass="columnFooter">
+				<f:facet name="header">Sender Account Number</f:facet>
+				<h:outputText value="#{row.toAccountId}" />
+			</h:column>
+
+			<!-- fromAccountId -->
+			<h:column headerClass="columnHeader" footerClass="columnFooter">
+				<f:facet name="header">Reciever Account Number</f:facet>
+				<h:outputText value="#{row.fromAccountId}" />
+			</h:column>
+
+			<!-- Amount -->
+			<h:column headerClass="columnHeader" footerClass="columnFooter">
+				<f:facet name="header">Amount</f:facet>
+				<h:outputText value="#{row.amount}" />
+			</h:column>
+
+			<!-- Status -->
+			<h:column headerClass="columnHeader" footerClass="columnFooter">
+				<f:facet name="header">Status</f:facet>
+				<h:outputText value="#{row.status}" />
+			</h:column>
+
+		</h:dataTable>
+
+	</h:form>
+</h:body>
 </html>

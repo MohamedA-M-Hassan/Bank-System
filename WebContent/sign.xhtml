@@ -7,7 +7,7 @@
 	<title>Banking System</title>
 	<h:outputStylesheet library="css" name="bootstrap.css" />
 	<h:outputStylesheet library="css" name="signup.css" />
-	<h:outputScript name="validate.js" library="javascript" target="head" />
+	
 </h:head>
 <body>
 	<div class="main-w3layouts">
@@ -18,6 +18,7 @@
 		<div class="main-agileinfo">
 			<div class="agileits-top">
 				<h:form id="select">
+				   <p:messages id="msgs" />
 					<h:selectOneRadio value="#{user.type}" id="userRadio">
 						<f:selectItem itemValue="1" itemLabel="Client" />
 						<f:selectItem itemValue="2" itemLabel="Employee" />
@@ -25,11 +26,18 @@
 					</h:selectOneRadio>
 					<h:panelGroup columns="2" id="client" rendered="#{user.type == 1}">
 						<h:outputText value="#{msgs.name}" style="color:white"></h:outputText>
-						<p:inputText style="color:white" value="#{user.client.name}" placeholder="Name" class="text"></p:inputText>
+						<p:inputText    style=" background:#f1f1f1" value="#{user.client.name}" placeholder="Name" class="text">
+						</p:inputText>
+						<p:spacer />
+						<h2></h2>
 						<p:spacer />
 						<h2></h2>
 						<h:outputText value="#{msgs.username}" style="color:white"></h:outputText>
 						<p:inputText style="color:white" value="#{user.client.userName}" placeholder="Username" class="text"></p:inputText>
+						<p:spacer />
+						<h2></h2>
+						<h:outputText value="#{msgs.birthDate}" style="color:white"></h:outputText>
+						<p:calendar value="#{user.client.birthDate}"></p:calendar>
 						<p:spacer />
 						<h2></h2>
 						<h:outputText value="#{msgs.password}" style="color:white"></h:outputText>
@@ -74,7 +82,7 @@
 						<h2></h2>
 						<h:outputText value="#{msgs.phone_no}" style="color:white"></h:outputText>
 						<p:inputText onkeypress="return checkDigit(event);" style="color:white" value="#{user.bankEmployee.mobile}" placeholder="Mobile Number" class="text"></p:inputText>
-						<h:commandButton value="Signup" action="#{user.addbankEmployee()}"></h:commandButton>
+						<h:commandButton value="Signup" action="#{user.addBankEmployee()}"></h:commandButton>
 					</h:panelGroup>
 				</h:form>
 			</div>

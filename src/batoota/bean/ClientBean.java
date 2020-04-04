@@ -18,7 +18,7 @@ import zglola.db.Client;
 public class ClientBean implements Serializable {
 	private Long id;
 	private String name;
-	private String userName;
+	private String username;
 	private String password;
 	private String mobile;
 	private Date birthDate;
@@ -36,7 +36,7 @@ public class ClientBean implements Serializable {
 		insertedClient.setId(handleId());
 		insertedClient.setName(name);
 		insertedClient.setMobile(mobile);
-		insertedClient.setUserName(userName.toLowerCase());
+		insertedClient.setUserName(username.toLowerCase());
 		insertedClient.setPassword(password);
 		//insertedClient.setNetSalary(netSalary);
 		insertedClient.setMail(mail);
@@ -49,7 +49,7 @@ public class ClientBean implements Serializable {
 	
 	public String login() {
 		
-		if(ClientService.getClientByEmailAndPassword(mail, password) != null)
+		if(ClientService.getClientByUsernameAndPassword(username, password) != null)
 			return "clientHome";
 		return "index";
 	}
@@ -80,11 +80,11 @@ public class ClientBean implements Serializable {
 	}
 
 	public String getUserName() {
-		return userName;
+		return username;
 	}
 
 	public void setUserName(String userName) {
-		this.userName = userName;
+		this.username = userName;
 	}
 
 	public String getPassword() {

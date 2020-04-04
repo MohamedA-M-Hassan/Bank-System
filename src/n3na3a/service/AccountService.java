@@ -5,10 +5,10 @@ import java.io.Serializable;
 
 import instead.of.db.AccountDB;
 import zglola.db.Account;
+import zglola.db.Client;
 
 
 @SuppressWarnings("serial")
-
 public class AccountService implements Serializable {
 	
 	public static void insertAccount(Account account) {
@@ -21,9 +21,10 @@ public class AccountService implements Serializable {
 		a = AccountDB.getAccountList().get(AccountDB.getAccountList().size()-1);
 		return (long) (a.getId()+1);
 	}
-	
-	public static Account getAccountByClientId(Long clientId)
+	// TODO review
+	public static Account getAccountByClientByClient(Long clientId)
 	{
+		
 		for (Account a:AccountDB.getAccountList()) {
 			if(a.getClientId() == clientId)
 				return a;
@@ -39,4 +40,15 @@ public class AccountService implements Serializable {
 	public static void deleteAccountByClient(Account a) {
 		AccountDB.getAccountList().remove(a);
 	}
+	
+	public static Long getAccountNumberFromTransactionAccountId(Long tranactionAccountId) {
+		for (Account a: AccountDB.getAccountList()) {
+			if(a.getId() == tranactionAccountId)
+			{
+				return a.getAccountNumber();
+			}
+		}
+		return null;
+	}
+
 }

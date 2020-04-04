@@ -38,11 +38,13 @@ public class AccountBean implements Serializable{
 		transaction.setFromAccountId(this.account.getId());
 		//transaction.setTransactionDate(new Date ());
 		transaction.setStatus("pending");
+		
 	}
 	
 	public void addTransaction()
 	{
-		TransactionService.addTransaction(transaction);
+		//TransactionService.addTransaction(transaction);
+		transactionList.add(transaction);
 	}
 	
 	public String logout() {

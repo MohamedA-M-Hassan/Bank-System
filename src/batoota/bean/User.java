@@ -73,15 +73,13 @@ public class User implements Serializable {
 		return "index";
 	}
 	
-	
-	
-	
 	public void addAccount(Long clientId) {
 		account.setId(handleAccountId());
 		account.setBalance(0L);
 		account.setClientId(clientId);
 		account.setAccountNumber(generateAccountNumber());
 		account.setAvailableBalance(0L);
+		AccountService.insertAccount(account);
 	}
 
 	public Long generateAccountNumber() {
@@ -94,7 +92,6 @@ public class User implements Serializable {
 		HttpSession session = SessionUtils.getSession();
 		 
 		// part1 [client]: check if username is correct and pass is not correct
-		// part2 [client]: check if username and pass are correct 
 		Client client = ClientService.getClientByUsernameAndPassword(username, password);
 		if (client != null) {
 			session.setAttribute("client", client);
@@ -103,7 +100,6 @@ public class User implements Serializable {
 		
 		
 		///////////////////////////////
-		// part3 [employee]: check if username is correct and pass is not correct
 		// part4 [employee]: check if username and pass are correct 
 		BankEmployee bankEmployee=  BankEmployeeService.getEmployeeByUsernameAndPassword(username, password);
 		if (bankEmployee != null) {

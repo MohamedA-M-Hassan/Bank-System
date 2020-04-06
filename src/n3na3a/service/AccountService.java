@@ -26,23 +26,21 @@ public class AccountService implements Serializable {
 	public static Account getAccountByClientByClient(Long clientId) {
 
 		for (Account a : AccountDB.getAccountList()) {
-			if (a.getClientId() == clientId)
+			if (a.getClientId().equals(clientId))
 				return a;
 		}
 		return null;
 	}
-
 
 	public static Account getAccountByAccountId(Long accountId) {
 
 		for (Account a : AccountDB.getAccountList()) {
-			if (a.getId() ==accountId)
+			if (a.getId() == accountId)
 				return a;
 		}
 		return null;
 	}
 
-	
 	public static void updateAccount(Account newAccount) {
 		AccountDB.getAccountList().set(AccountDB.getAccountList().indexOf(newAccount), newAccount);
 	}
@@ -73,33 +71,45 @@ public class AccountService implements Serializable {
 		return clientId;
 	}
 	///////////////////////
-	
+
 	public static void updateBalanceAndAvailableBalance(Transaction transactionToBeEdited) {
 
 		Account tempAccount = new Account();
-		
-		// Sender
-		// get sender account
-		
-		tempAccount = AccountService.getAccountByAccountId(transactionToBeEdited.getFromAccountId());
 
-		
-		if (transactionToBeEdited.getToAccountId() != transactionToBeEdited.getFromAccountId())
-			AccountService.handleAccountBalanceNegative(transactionToBeEdited, tempAccount);
-		else
-			AccountService.handleAccountAvailableBalancePositive(transactionToBeEdited, tempAccount);
+		if (transactionToBeEdited.getStatus().equals("Accepted")) {
+			// Sender
+			// get sender account
 
-		// get receiver
-		tempAccount = AccountService.getAccountByAccountId(transactionToBeEdited.getToAccountId());
+			tempAccount = AccountService.getAccountByAccountId(transactionToBeEdited.getFromAccountId());
 
-		if (transactionToBeEdited.getToAccountId() != transactionToBeEdited.getFromAccountId()) {
-			AccountService.handleAccountBalancePositive(transactionToBeEdited, tempAccount);
-			AccountService.handleAccountAvailableBalancePositive(transactionToBeEdited, tempAccount);
+			if (transactionToBeEdited.getToAccountId() != transactionToBeEdited.getFromAccountId())
+				AccountService.handleAccountBalanceNegative(transactionToBeEdited, tempAccount);
+			else
+				AccountService.handleAccountAvailableBalancePositive(transactionToBeEdited, tempAccount);
+
+			// get receiver
+			tempAccount = AccountService.getAccountByAccountId(transactionToBeEdited.getToAccountId());
+
+			if (transactionToBeEdited.getToAccountId() != transactionToBeEdited.getFromAccountId()) {
+				AccountService.handleAccountBalancePositive(transactionToBeEdited, tempAccount);
+				AccountService.handleAccountAvailableBalancePositive(transactionToBeEdited, tempAccount);
+			}
+
 		}
 
-		
-		
+		else {
+			// Sender
+			// get sender account
+			tempAccount = AccountService.getAccountByAccountId(transactionToBeEdited.getFromAccountId());
+
+			if (transactionToBeEdited.getToAccountId() != transactionToBeEdited.getFromAccountId())
+				AccountService.handleAccountAvailableBalancePositive(transactionToBeEdited, tempAccount);
+			else
+				AccountService.handleAccountBalanceNegative(transactionToBeEdited, tempAccount);
+
+		}
 	}
+
 	public static void handleAccountAvailableBalanceNegative(Transaction t, Account oldAccount) {
 		// Account updatedAccount = oldAccount;
 		oldAccount.setAvailableBalance(oldAccount.getAvailableBalance() - t.getAmount());
@@ -110,6 +120,7 @@ public class AccountService implements Serializable {
 		oldAccount.setBalance(oldAccount.getBalance() - t.getAmount());
 		updateAccount(oldAccount);
 	}
+
 	public static void handleAccountAvailableBalancePositive(Transaction t, Account oldAccount) {
 		// Account updatedAccount = oldAccount;
 		oldAccount.setAvailableBalance(oldAccount.getAvailableBalance() + t.getAmount());

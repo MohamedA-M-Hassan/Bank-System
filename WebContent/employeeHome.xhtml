@@ -20,36 +20,42 @@
 			<h4>welcome from Employee home,
 				#{employeeHome.employee.userName}</h4>
 		</div>
-		
-		<div>
-			<h4>Analysis Table</h4>
-			<table class="table table-bordered">
+				<div>
+			<table class="table">
 				<thead>
-					<tr style="text-align: cneter">
-						<th>#{msgs.totalnumberofclients}</th>
-						<th>#{msgs.bestClient}</th>
-						<th>#{msgs.totalnumberofTransactions}</th>
-						<th>#{msgs.totalnumberofPendingTransactions}</th>
-						<th>#{msgs.totalNumberOfTransactionsSubmitedByCurrentEmployee}</th>
-						<th>#{msgs.myPerformance}</th>
+					<tr>
+						<th><div class="panel panel-primary" style="width: 250px">
+								<div class="panel-heading">#{msgs.totalnumberofclients}</div>
+								<div class="panel-body">#{employeeHome.totalNumberOfClients}</div>
+							</div></th>
+						<th><div class="panel panel-primary" style="width: 250px">
+								<div class="panel-heading">#{msgs.bestClient}</div>
+								<div class="panel-body">#{employeeHome.bestClient.name}</div>
+							</div></th>
+						<th><div class="panel panel-primary" style="width: 250px">
+								<div class="panel-heading">#{msgs.totalnumberofTransactions}</div>
+								<div class="panel-body">##{employeeHome.totalNumberOfTransactions}</div>
+							</div></th>
+						<th><div class="panel panel-primary" style="width: 250px">
+								<div class="panel-heading">#{msgs.totalnumberofPendingTransactions}</div>
+								<div class="panel-body">#{employeeHome.totalNumberOfPendingTransactions}</div>
+							</div></th>
+							<th><div class="panel panel-primary" style="width: 250px">
+								<div class="panel-heading">#{msgs.totalNumberOfTransactionsSubmitedByCurrentEmployee}</div>
+								<div class="panel-body">#{employeeHome.totalNumberOfTransactionsSubmitedByCurrentEmployee}</div>
+							</div></th>
+							<th><div class="panel panel-primary" style="width: 250px">
+								<div class="panel-heading">#{msgs.myPerformance}</div>
+								<div class="panel-body">#{employeeHome.performanceRatio}%</div>
+							</div></th>
 					</tr>
 				</thead>
-				<tbody>
-					<tr>
-						<td>#{employeeHome.totalNumberOfClients}</td>
-						<td>#{employeeHome.bestClient.name}</td>
-						<td>#{employeeHome.totalNumberOfTransactions}</td>
-						<td>#{employeeHome.totalNumberOfPendingTransactions}</td>
-						<td>#{employeeHome.totalNumberOfTransactionsSubmitedByCurrentEmployee}</td>
-						<td>#{employeeHome.performanceRatio}%</td>
-					</tr>
-				</tbody>
+
 			</table>
-
-
 		</div>
+
 		<!-- the table  -->
-		<h:dataTable id="transactionTable"
+		<p:dataTable id="transactionTable"
 			value="#{employeeHome.transactionList}" var="row"
 			captionStyle="font-size: 0.95em; font-style:italic"
 			style="width: 800px;color: black" class="table table-bordered">
@@ -58,49 +64,49 @@
 
 
 			<!-- desc -->
-			<h:column headerClass="columnHeader" footerClass="columnFooter">
+			<p:column filterBy="#{row.description}" headerText="Id"  filterMatchMode="contains" headerClass="columnHeader" footerClass="columnFooter">
 				<f:facet name="header">Description</f:facet>
 				<h:outputText value="#{row.description}" />
-			</h:column>
+			</p:column>
 
 
 			<!-- fromAccountId -->
-			<h:column headerClass="columnHeader" footerClass="columnFooter">
+			<p:column headerClass="columnHeader" footerClass="columnFooter">
 				<f:facet name="header">Sender Account Number</f:facet>
 				<h:outputText value="#{row.fromAccountId}" />
-			</h:column>
+			</p:column>
 
 			<!-- toAccountId -->
-			<h:column headerClass="columnHeader" footerClass="columnFooter">
+			<p:column headerClass="columnHeader" footerClass="columnFooter">
 				<f:facet name="header">Reciever Account Number</f:facet>
 				<h:outputText value="#{row.toAccountId}" />
-			</h:column>
+			</p:column>
 
 			<!-- Amount -->
-			<h:column headerClass="columnHeader" footerClass="columnFooter">
+			<p:column headerClass="columnHeader" footerClass="columnFooter">
 				<f:facet name="header">Amount</f:facet>
 				<h:outputText value="#{row.amount}" />
-			</h:column>
+			</p:column>
 
 			<!-- Status -->
-			<h:column headerClass="columnHeader" footerClass="columnFooter">
+			<p:column filterBy="#{row.status}" headerText="Id"  filterMatchMode="contains" headerClass="columnHeader" footerClass="columnFooter">
 				<f:facet name="header">Status</f:facet>
 				<h:outputText value="#{row.status}" />
-			</h:column>
+			</p:column>
 
 			<!-- EditStatus -->
-			<h:column headerClass="columnHeader" footerClass="columnFooter">
+			<p:column headerClass="columnHeader" footerClass="columnFooter">
 				<f:facet name="header">EditStatus</f:facet>
 				<h:commandButton value="#{msgs.edit}" disabled="#{row.status != 'Pending'}"
 					action="#{employeeHome.selectedTransaction(row)}" class="btn">
-					<f:ajax render="emplyeeHomeFormId"
+					<f:ajax render="emplyeeHomeFormId"	
 						onevent="function(e){if(e.status == 'success') PF('transactionDialog').show();}"></f:ajax>
 				</h:commandButton>
-			</h:column>
+			</p:column>
 
 
 
-		</h:dataTable>
+		</p:dataTable>
 
 
 		<p:dialog header="#{msgs.newTransaction}" id="transactionDialogId"
@@ -133,8 +139,8 @@
 				<h:commandButton value="#{msgs.approve}" action="#{employeeHome.approveTransaction()}">
 							<f:ajax render="emplyeeHomeFormId" execute="emplyeeHomeFormId" />
 				</h:commandButton>
-				<h:commandButton value="#{msgs.reject}">
-							<!-- f:ajax render="accountFormId" execute="accountFormId" / -->
+				<h:commandButton value="#{msgs.reject}" action="#{employeeHome.rejectTransaction()}">
+							<f:ajax render="emplyeeHomeFormId" execute="emplyeeHomeFormId" />
 				</h:commandButton>
 			</h:panelGroup>
 		</p:dialog>

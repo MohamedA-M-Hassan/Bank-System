@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import n3na3a.service.BankEmployeeService;
 import n3na3a.service.ClientService;
 import zglola.db.BankEmployee;
 import zglola.db.Client;
@@ -22,14 +23,15 @@ public class UserValidation implements Serializable {
 		if (ClientService.usernameIsAlreadyTaken(client.getUserName()))
 			return errorUsernameIsTakenMsg();
 
-		if (!isValidPhoneNumber(client.getMobile()))
-			return errorMobileMsg();
-
+		
 		if (!isValidPassword(client.getPassword()))
 			return errorPassMsg();
 
 		if (!isValidEmail(client.getMail()))
 			return errorEmailMsg();
+
+		if (!isValidPhoneNumber(client.getMobile()))
+			return errorMobileMsg();
 
 		return true;
 
@@ -42,14 +44,15 @@ public class UserValidation implements Serializable {
 		if (!isValidUsername(employee.getUserName()))
 			return errorUsernameMsg();
 
-		if (ClientService.usernameIsAlreadyTaken(employee.getUserName()))
+		if (BankEmployeeService.usernameIsAlreadyTaken(employee.getUserName()))
 			return errorUsernameIsTakenMsg();
+
+		if (!isValidPassword(employee.getPassword()))
+			return errorPassMsg();
 
 		if (!isValidPhoneNumber(employee.getMobile()))
 			return errorMobileMsg();
 
-		if (!isValidPassword(employee.getPassword()))
-			return errorPassMsg();
 		return true;
 	}
 
@@ -62,7 +65,6 @@ public class UserValidation implements Serializable {
 				return false;
 		}
 		return true;
-
 	}
 
 	public static boolean isValidEmail(String email) {
@@ -180,8 +182,9 @@ public class UserValidation implements Serializable {
 	}
 
 	public static boolean errorPassMsg() {
+
 		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage(null, new FacesMessage("Please ener a vaild password!"));
+		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"Please ener a vaild password!",""));
 		return false;
 	}
 

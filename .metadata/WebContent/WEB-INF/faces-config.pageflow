@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15858216735820" configfile="/EjadaBank/WebContent/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="sign.xhtml" id="pf15858474656843" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf15858474656844" path="/sign.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" id="pf15858474656845" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf15858638590398" inlinks="pf15858474656844" path="/index.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="account.xhtml" id="pf15858638590399" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf15858638590398" path="/account.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="sign.xhtml" x="122" y="370" id="pf15858474656843" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" outlinks="pf15858474656844 pf15861940764590" inlinks="pf15861940764590" path="/sign.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" x="338" y="370" id="pf15858474656845" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf15858638590398 pf15861940764591" inlinks="pf15858474656844" path="/index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="account.xhtml" x="554" y="178" id="pf15858638590399" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf15858638590398" path="/account.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="employeeHome.xhtml" x="554" y="562" id="pf15861940764592" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf15861940764591" path="/employeeHome.xhtml"/>
   <links id="pf15858474656844" target="pf15858474656845" source="pf15858474656843" outcome="index"/>
   <links id="pf15858638590398" target="pf15858638590399" source="pf15858474656845" outcome="clientHome"/>
+  <links id="pf15861940764591" target="pf15861940764592" source="pf15858474656845" outcome="employeeHome"/>
+  <links id="pf15861940764590" target="pf15858474656843" source="pf15858474656843" outcome="error">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
 </pageflow:Pageflow>

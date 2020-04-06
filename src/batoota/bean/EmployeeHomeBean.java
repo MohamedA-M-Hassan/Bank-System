@@ -64,6 +64,15 @@ public class EmployeeHomeBean implements Serializable {
 		init();
 	}
 
+	public void rejectTransaction()
+	{
+		this.transactionToBeEdited.setBankEmployeeId(this.employee.getId());
+		this.transactionToBeEdited.setStatus("Rejected");
+		AccountService.updateBalanceAndAvailableBalance(transactionToBeEdited);
+		// TransactionService.updateTransaction(transactionToBeEdited);
+		// this.bestClient = returnBestClient();
+		init();
+	}
 	public void init() {
 		transactionToBeEdited = new Transaction();
 		this.totalNumberOfClients = ClientService.getNoOfClientsInDbToHandleID();

@@ -13,6 +13,14 @@
 	<h:outputStylesheet library="css" name="signup.css" />
 </h:head>
 <body>
+	<h:form>
+		<div>
+			<h:selectOneMenu value="#{localeBean.language}" onchange="submit()">
+				<f:selectItem itemValue="en" itemLabel="English" />
+				<f:selectItem itemValue="ar" itemLabel="Arabic" />
+			</h:selectOneMenu>
+		</div>
+	</h:form>
 	<div class="main-w3layouts">
 		<div style="text-align: center;">
 			<p:graphicImage width="5%" height="5%" name="/images/logo4.png" />

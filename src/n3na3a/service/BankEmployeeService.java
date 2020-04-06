@@ -3,7 +3,9 @@ package n3na3a.service;
 import java.io.Serializable;
 
 import instead.of.db.BankEmployeeDB;
+import instead.of.db.ClientDB;
 import zglola.db.BankEmployee;
+import zglola.db.Client;
 
 @SuppressWarnings("serial")
 
@@ -22,11 +24,21 @@ public class BankEmployeeService implements Serializable {
 		return null;
 	}
 	
-	public static Long getNoOfClientsInDbToHandleID(){
+	public static Long getNoOfEmployeesInDbToHandleID(){
 		return (long) BankEmployeeDB.getEmployeeList().size();
 	}
 	
 	public static void updateBankEmployee() {
 		
 	}
+	public static boolean usernameIsAlreadyTaken(String username)
+	{
+		for( BankEmployee e : BankEmployeeDB.getEmployeeList())
+		{
+			if(e.getUserName().equals(username))
+				return true;
+		}
+		return false;
+	}
+
 }

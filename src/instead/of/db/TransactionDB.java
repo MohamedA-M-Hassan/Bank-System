@@ -30,7 +30,7 @@ public class TransactionDB {
 		transaction2.setId(0L);
 		transaction2.setStatus("Pending");
 		transaction2.setDescription("Sec transaction");
-		transaction2.setBankEmployeeId(1L);
+		transaction2.setBankEmployeeId(0L);
 		transaction2.setToAccountId(2L);
 		transaction2.setFromAccountId(0L);
 		transaction2.setAmount(300L);

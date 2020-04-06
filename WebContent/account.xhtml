@@ -8,7 +8,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>Ejada Deals</title>
+	<title>Account</title>
 	<h:outputStylesheet library="css" name="bootstrap.css" />
 </h:head>
 
@@ -29,25 +29,31 @@
 		</ul>
 	</div>
 	</nav>
-
-
-
 	<h:form id="accountFormId">
 
 		<div>
-			<h:commandLink action="#{account.logout}" value="Logout"></h:commandLink>
+			<h:commandButton action="#{account.logout()}" value="Logout"></h:commandButton>
 			<h2>welcome from Account</h2>
 		</div>
 		<div>
-			<h:outputText value="Account Number: "></h:outputText>
-			<h:outputText value="#{account.account.accountNumber}"></h:outputText>
-			<h:outputText value="Your Balance: "></h:outputText>
-			<h:outputText value="#{account.account.balance}"></h:outputText>
-			<h:outputText value="Your salary: "></h:outputText>
-			<h:outputText value="#{account.client.netSalary}"></h:outputText>
-
-
-
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>#{msgs.accountNumber}</th>
+						<th>#{msgs.balance}</th>
+						<th>#{msgs.availableBalance}</th>
+						<th>#{msgs.salary}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>#{account.account.accountNumber}</td>
+						<td>#{account.account.balance}</td>
+						<td>#{account.account.availableBalance}</td>
+						<td>#{account.client.netSalary}</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 		<div>
 			<h:commandButton
@@ -102,13 +108,13 @@
 				<h:outputText value="#{row.description}" />
 			</h:column>
 
-			
+
 			<!-- fromAccountId -->
 			<h:column headerClass="columnHeader" footerClass="columnFooter">
 				<f:facet name="header">Sender Account Number</f:facet>
 				<h:outputText value="#{row.fromAccountId}" />
 			</h:column>
-			
+
 			<!-- toAccountId -->
 			<h:column headerClass="columnHeader" footerClass="columnFooter">
 				<f:facet name="header">Reciever Account Number</f:facet>

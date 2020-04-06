@@ -28,5 +28,23 @@ public class ClientService implements Serializable {
 	public static void updateClient() {
 
 	}
-
+	
+	
+	public static Client getClientById(Long clientId) {
+		for (Client c : ClientDB.getClientList()) {
+			if (c.getId().equals(clientId))
+				return c;
+		}
+		return null;
+	}
+	
+	public static boolean usernameIsAlreadyTaken(String username)
+	{
+		for( Client c: ClientDB.getClientList())
+		{
+			if(c.getUserName().equals(username))
+				return true;
+		}
+		return false;
+	}
 }

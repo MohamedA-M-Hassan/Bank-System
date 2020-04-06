@@ -29,25 +29,33 @@ public class AccountBean implements Serializable{
 		this.account = AccountService.getAccountByClientByClient(this.client.getId());
 		this.transactionList = TransactionService.getTransactionsByAccountId(this.account.getId());
 		//this.transactionListToDisply =TransactionService.transactionListToDislpyWithAccountNo(this.transactionList);
+		transaction= new Transaction();
+
 	}
 	
-
 	public void dialogTransaction()
 	{
-		transaction= new Transaction();
-		transaction.setFromAccountId(this.account.getId());
-		//transaction.setTransactionDate(new Date ());
-		transaction.setStatus("pending");
-		
+		transaction = new Transaction();
 	}
 	
 	public void addTransaction()
 	{
-		//TransactionService.addTransaction(transaction);
+		transaction.setFromAccountId(this.account.getId());
+		//transaction.setTransactionDate(new Date ());
+		transaction.setStatus("Pending");
+		TransactionService.addTransaction(transaction);
 		transactionList.add(transaction);
+		if(transaction.getToAccountId() != transaction.getFromAccountId())
+			AccountService.handleAccountAvailableBalanceNegative(transaction,account);
+		else
+			AccountService.handleAccountBalancePositive(transaction,account);
+
 	}
 	
+	
+	
 	public String logout() {
+		
 		HttpSession session = SessionUtils.getSession();
 		session.invalidate();
 		return "index";

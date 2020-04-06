@@ -2,12 +2,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<title>Banking System</title>
 	<h:outputStylesheet library="css" name="bootstrap.css" />
 	<h:outputStylesheet library="css" name="signup.css" />
-	
+
 </h:head>
 <body>
 	<div class="main-w3layouts">
@@ -18,22 +21,29 @@
 		<div class="main-agileinfo">
 			<div class="agileits-top">
 				<h:form id="select">
-				   <p:messages id="msgs" />
-					<h:selectOneRadio value="#{user.type}" id="userRadio">
-						<f:selectItem itemValue="1" itemLabel="Client" />
-						<f:selectItem itemValue="2" itemLabel="Employee" />
-						<f:ajax event="change" listener="#{user.reset()}" render="select" execute="select" />
+					<p:messages id="msgs" />
+					<h:selectOneRadio value="#{user.type}" id="userRadio"
+						style="color:white">
+						<f:selectItem itemValue="1" itemLabel="Client" style="color:white" />
+						<f:selectItem itemValue="2" itemLabel="Employee"
+							style="color:white" />
+						<f:ajax event="change" listener="#{user.reset()}" render="select"
+							execute="select" />
 					</h:selectOneRadio>
+
+					<!-- Client -->
 					<h:panelGroup columns="2" id="client" rendered="#{user.type == 1}">
 						<h:outputText value="#{msgs.name}" style="color:white"></h:outputText>
-						<p:inputText    style=" background:#f1f1f1" value="#{user.client.name}" placeholder="Name" class="text">
+						<p:inputText value="#{user.client.name}" placeholder="Name"
+							class="text">
 						</p:inputText>
 						<p:spacer />
 						<h2></h2>
 						<p:spacer />
 						<h2></h2>
 						<h:outputText value="#{msgs.username}" style="color:white"></h:outputText>
-						<p:inputText style="color:white" value="#{user.client.userName}" placeholder="Username" class="text"></p:inputText>
+						<p:inputText style="color:white" value="#{user.client.userName}"
+							placeholder="Username" class="text"></p:inputText>
 						<p:spacer />
 						<h2></h2>
 						<h:outputText value="#{msgs.birthDate}" style="color:white"></h:outputText>
@@ -41,50 +51,81 @@
 						<p:spacer />
 						<h2></h2>
 						<h:outputText value="#{msgs.password}" style="color:white"></h:outputText>
-						<p:password placeholder="password" style="color:white" value="#{user.client.password}" class="text"></p:password>
+						<p:password placeholder="password" style="color:white"
+							value="#{user.client.password}" class="text" id="clientPass"></p:password>
+						<p:tooltip for="clientPass"
+							value="no space,1 capital , 1 small letter, 1 symbol, total 8 characters or more" />
+
 						<p:spacer />
 						<h2></h2>
-						<h:outputText value="Email" style="color:white"></h:outputText>
-						<p:inputText id="email" style="color:white" value="#{user.client.mail}" placeholder="Mail" class="text">
+						<h:outputText value="#{msgs.mail}" style="color:white"></h:outputText>
+						<p:inputText id="email" style="color:white"
+							value="#{user.client.mail}" placeholder="Mail" class="text">
 
 						</p:inputText>
 						<p:spacer />
 						<h2></h2>
-						<h:outputText value="Address" style="color:white"></h:outputText>
-						<p:inputText style="color:white" value="#{user.client.address}" placeholder="Address" class="text"></p:inputText>
+						<h:outputText value="#{msgs.address}" style="color:white"></h:outputText>
+						<p:inputText style="color:white" value="#{user.client.address}"
+							placeholder="Address" class="text"></p:inputText>
 						<p:spacer />
 						<h2></h2>
 						<h:outputText value="#{msgs.phone_no}" style="color:white"></h:outputText>
-						<p:inputText onkeypress="return checkDigit(event);" style="color:white" value="#{user.client.mobile}" placeholder="Mobile Number" class="text"></p:inputText>
-						<h:commandButton value="Signup" action="#{user.addClient()}"></h:commandButton>
+						<p:inputText id="clientPhone" style="color:white"
+							value="#{user.client.mobile}" placeholder="Mobile Number"
+							class="text"></p:inputText>
+						<p:tooltip for="clientPhone" value="Only numbers" />
 
+						<h:commandButton value="Signup" action="#{user.addClient()}"></h:commandButton>
 					</h:panelGroup>
+
+					<!-- Emp -->
 					<h:panelGroup columns="2" id="emp" rendered="#{user.type == 2}">
 						<h:outputText value="#{msgs.name}" style="color:white"></h:outputText>
-						<p:inputText style="color:white" value="#{user.bankEmployee.name}" placeholder="Name" class="text"></p:inputText>
+						<p:inputText style="color:white" value="#{user.bankEmployee.name}"
+							placeholder="Name" class="text"></p:inputText>
 						<p:spacer />
 						<h2></h2>
 						<h:outputText value="#{msgs.username}" style="color:white"></h:outputText>
-						<p:inputText style="color:white" value="#{user.bankEmployee.userName}" placeholder="Username" class="text"></p:inputText>
+						<p:inputText style="color:white"
+							value="#{user.bankEmployee.userName}" placeholder="Username"
+							class="text"></p:inputText>
 						<p:spacer />
 						<h2></h2>
 						<h:outputText value="#{msgs.password}" style="color:white"></h:outputText>
-						<p:password placeholder="password" style="color:white" value="#{user.bankEmployee.password}" class="text"></p:password>
-						<p:spacer />
-						<h2></h2>
-						<h:outputText value="#{msgs.phone_no}" style="color:white"></h:outputText>
-						<p:inputText onkeypress="return checkDigit(event);" style="color:white" value="#{user.bankEmployee.mobile}" placeholder="Mobile Number" class="text"></p:inputText>
+						<p:password id="empPass" placeholder="password"
+							style="color:white" value="#{user.bankEmployee.password}"
+							class="text"></p:password>
+						<p:tooltip for="empPass"
+							value="no space,1 capital , 1 small letter, 1 symbol,total 8 characters or more" />
+
 						<p:spacer />
 						<h2></h2>
 						<h:outputText value="#{msgs.position}" style="color:white"></h:outputText>
-						<p:inputText placeholder="position" style="color:white" value="#{user.bankEmployee.position}" class="text"></p:inputText>
+						<h:selectOneMenu value="#{user.bankEmployee.position}"
+							class="form-control !important">
+							<f:selectItem itemValue="manager" itemLabel="Manager" />
+							<f:selectItem itemValue="accountant" itemLabel="Accountant" />
+							<f:selectItem itemValue="it" itemLabel="It" />
+							<f:selectItem itemValue="engineer" itemLabel="Engineer" />
+							<f:ajax render="select" execute="select">
+							</f:ajax>
+						</h:selectOneMenu>
 						<p:spacer />
 						<h2></h2>
 						<h:outputText value="#{msgs.phone_no}" style="color:white"></h:outputText>
-						<p:inputText onkeypress="return checkDigit(event);" style="color:white" value="#{user.bankEmployee.mobile}" placeholder="Mobile Number" class="text"></p:inputText>
+						<p:inputText  id="empPhone" style="color:white"
+							value="#{user.bankEmployee.mobile}" placeholder="Mobile Number"
+							class="text"></p:inputText>
+						<p:tooltip for="empPhone" value="Only numbers" />
+
 						<h:commandButton value="Signup" action="#{user.addBankEmployee()}"></h:commandButton>
 					</h:panelGroup>
 				</h:form>
+				<p>
+					You have an Account? <a href="/EjadaBank/index.xhtml"> Login
+						Now!</a>
+				</p>
 			</div>
 		</div>
 	</div>

@@ -5,12 +5,15 @@ import java.io.Serializable;
 public class Account implements Serializable {
 	private Long id;
 	private Long balance;
+	private Long availableBalance;
 	private Long clientId;
 	private Long accountNumber;
+
 	public Account() {}
-	public Account(Long id, Long balance, Long clientId,Long accountNo) {
+	public Account(Long id, Long balance, Long availableBalance, Long clientId,Long accountNo) {
 		this.id = id;
 		this.balance = balance;
+		this.availableBalance = availableBalance;
 		this.clientId = clientId;
 		this.accountNumber =accountNo;
 	}
@@ -44,4 +47,12 @@ public class Account implements Serializable {
 	public void setAccountNumber(Long accountNumber) {
 		this.accountNumber = accountNumber;
 	}
+	
+	public Long getAvailableBalance() {
+		return availableBalance;
+	}
+	public void setAvailableBalance(Long availableBalance) {
+		this.availableBalance = availableBalance;
+	}
+
 }

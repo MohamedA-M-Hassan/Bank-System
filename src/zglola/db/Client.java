@@ -16,7 +16,7 @@ public class Client implements Serializable {
 	private String mail;
 	private String address;
 	private Long netSalary;
-	private Long bankId;
+	//private Long bankId;
 	// private Long employeeId;
 	// private Long type;
 
@@ -24,7 +24,7 @@ public class Client implements Serializable {
 
 	}
 
-	public Client(Long id, String name, String userName, String password, String mobile, Date birthDate, String mail, String address, Long netSalary, Long bankId) {
+	public Client(Long id, String name, String userName, String password, String mobile, Date birthDate, String mail, String address, Long netSalary) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -35,7 +35,7 @@ public class Client implements Serializable {
 		this.mail = mail;
 		this.address = address;
 		this.netSalary = netSalary;
-		this.bankId = bankId;
+		//this.bankId = bankId;
 	}
 
 	public Long getId() {
@@ -114,7 +114,7 @@ public class Client implements Serializable {
 	public void setNetSalary(Long netSalary) {
 		this.netSalary = netSalary;
 	}
-
+/*
 	public Long getBankId() {
 		return bankId;
 	}
@@ -122,7 +122,7 @@ public class Client implements Serializable {
 	public void setBankId(Long bankId) {
 		this.bankId = bankId;
 	}
-	/*
+	
 	 * public Long getEmployeeId() { return employeeId; }
 	 * 
 	 * public void setEmployeeId(Long employeeId) { this.employeeId = employeeId; }

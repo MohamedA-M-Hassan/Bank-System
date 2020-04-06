@@ -7,6 +7,8 @@ public class Bank implements Serializable{
 	private String branchAddress;
 	
 	
+	public Bank() {}
+	
 	public Long getId() {
 		return id;
 	}

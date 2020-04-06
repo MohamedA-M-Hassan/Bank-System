@@ -28,6 +28,13 @@
       </navigation-case>
    </navigation-rule>
    <navigation-rule>
+      <from-view-id>/index.xhtml</from-view-id>
+      <navigation-case>
+         <from-outcome>employeeHome</from-outcome>
+         <to-view-id>/employeeHome.xhtml</to-view-id>
+      </navigation-case>
+   </navigation-rule>
+   <navigation-rule>
       <from-view-id>/sign.xhtml</from-view-id>
       <navigation-case>
          <from-outcome>error</from-outcome>

@@ -7,8 +7,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+import java.util.regex.Matcher; 
+import java.util.regex.Pattern; 
 
 import n3na3a.service.AccountService;
+import n3na3a.service.BankEmployeeService;
 import n3na3a.service.ClientService;
 import zglola.db.Account;
 import zglola.db.BankEmployee;
@@ -43,45 +46,42 @@ public class User implements Serializable {
 	}
 
 	public Long handleBankEmployeeId() {
-		// TO_DO
-		return (long) ClientService.getNoOfClientsInDbToHandleID();
-	}
+		// TODO review
+ 		return (long) BankEmployeeService.getNoOfEmployeesInDbToHandleID();
+		}
 
 	public String addBankEmployee() {
-		// TODO
+		if( ! UserValidation.validateBankEmployee(bankEmployee) ) 
+			return "error";
+
+		bankEmployee.setId(handleBankEmployeeId());
+		BankEmployeeService.insertEmployee(bankEmployee);
+
 		return "index";
 	}
 
 	// sign
 	public String addClient() {
-		validateClient(client);
-
-		// TODO : Check if unique or already taken
+		if( ! UserValidation.validateClient(client) ) 
+			return "error";
+		
 		client.setId(handleClientId());
 		ClientService.insertClient(client);
 
 		addAccount(client.getId());
 
 		return "index";
-
 	}
-
-	public String validateClient(Client client) {
-		if (client.getName().equals(null) || client.getName().trim().equals("")) {
-			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(null, new FacesMessage("Name is required"));
-			return "error";
-		}
-		return "";
-
-	}
-
+	
+	
+	
+	
 	public void addAccount(Long clientId) {
 		account.setId(handleAccountId());
 		account.setBalance(0L);
 		account.setClientId(clientId);
 		account.setAccountNumber(generateAccountNumber());
-
+		account.setAvailableBalance(0L);
 	}
 
 	public Long generateAccountNumber() {
@@ -90,19 +90,32 @@ public class User implements Serializable {
 	}
 
 	public String login() {
-
+		
+		HttpSession session = SessionUtils.getSession();
+		 
+		// part1 [client]: check if username is correct and pass is not correct
+		// part2 [client]: check if username and pass are correct 
 		Client client = ClientService.getClientByUsernameAndPassword(username, password);
 		if (client != null) {
-			HttpSession session = SessionUtils.getSession();
 			session.setAttribute("client", client);
 			return "clientHome";
 		}
+		
+		
+		///////////////////////////////
+		// part3 [employee]: check if username is correct and pass is not correct
+		// part4 [employee]: check if username and pass are correct 
+		BankEmployee bankEmployee=  BankEmployeeService.getEmployeeByUsernameAndPassword(username, password);
+		if (bankEmployee != null) {
+			session.setAttribute("employee", bankEmployee);
+			return "employeeHome";
+		}
+		
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_WARN,
 						"Invalid Username or Passowrd",
 						"Please enter correct username and Password"));
-
 		return "index";
 	}
 

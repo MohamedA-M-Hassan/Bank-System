@@ -1,0 +1,146 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Transactions</title>
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+</h:head>
+
+<h:body>
+	<h:form id="emplyeeHomeFormId">
+
+		<div>
+			<h:commandButton action="#{employeeHome.logout()}" value="Logout"></h:commandButton>
+			<h4>welcome from Employee home,
+				#{employeeHome.employee.userName}</h4>
+		</div>
+		
+		<div>
+			<h4>Analysis Table</h4>
+			<table class="table table-bordered">
+				<thead>
+					<tr style="text-align: cneter">
+						<th>#{msgs.totalnumberofclients}</th>
+						<th>#{msgs.bestClient}</th>
+						<th>#{msgs.totalnumberofTransactions}</th>
+						<th>#{msgs.totalnumberofPendingTransactions}</th>
+						<th>#{msgs.totalNumberOfTransactionsSubmitedByCurrentEmployee}</th>
+						<th>#{msgs.myPerformance}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>#{employeeHome.totalNumberOfClients}</td>
+						<td>#{employeeHome.bestClient.name}</td>
+						<td>#{employeeHome.totalNumberOfTransactions}</td>
+						<td>#{employeeHome.totalNumberOfPendingTransactions}</td>
+						<td>#{employeeHome.totalNumberOfTransactionsSubmitedByCurrentEmployee}</td>
+						<td>#{employeeHome.performanceRatio}%</td>
+					</tr>
+				</tbody>
+			</table>
+
+
+		</div>
+		<!-- the table  -->
+		<h:dataTable id="transactionTable"
+			value="#{employeeHome.transactionList}" var="row"
+			captionStyle="font-size: 0.95em; font-style:italic"
+			style="width: 800px;color: black" class="table table-bordered">
+
+			<f:facet name="caption">Transactions</f:facet>
+
+
+			<!-- desc -->
+			<h:column headerClass="columnHeader" footerClass="columnFooter">
+				<f:facet name="header">Description</f:facet>
+				<h:outputText value="#{row.description}" />
+			</h:column>
+
+
+			<!-- fromAccountId -->
+			<h:column headerClass="columnHeader" footerClass="columnFooter">
+				<f:facet name="header">Sender Account Number</f:facet>
+				<h:outputText value="#{row.fromAccountId}" />
+			</h:column>
+
+			<!-- toAccountId -->
+			<h:column headerClass="columnHeader" footerClass="columnFooter">
+				<f:facet name="header">Reciever Account Number</f:facet>
+				<h:outputText value="#{row.toAccountId}" />
+			</h:column>
+
+			<!-- Amount -->
+			<h:column headerClass="columnHeader" footerClass="columnFooter">
+				<f:facet name="header">Amount</f:facet>
+				<h:outputText value="#{row.amount}" />
+			</h:column>
+
+			<!-- Status -->
+			<h:column headerClass="columnHeader" footerClass="columnFooter">
+				<f:facet name="header">Status</f:facet>
+				<h:outputText value="#{row.status}" />
+			</h:column>
+
+			<!-- EditStatus -->
+			<h:column headerClass="columnHeader" footerClass="columnFooter">
+				<f:facet name="header">EditStatus</f:facet>
+				<h:commandButton value="#{msgs.edit}" disabled="#{row.status != 'Pending'}"
+					action="#{employeeHome.selectedTransaction(row)}" class="btn">
+					<f:ajax render="emplyeeHomeFormId"
+						onevent="function(e){if(e.status == 'success') PF('transactionDialog').show();}"></f:ajax>
+				</h:commandButton>
+			</h:column>
+
+
+
+		</h:dataTable>
+
+
+		<p:dialog header="#{msgs.newTransaction}" id="transactionDialogId"
+			widgetVar="transactionDialog" modal="true" width="600px"
+			minHeight="220">
+			<h:panelGroup id="transactionPanelGroupId">
+				<table width="100%" class="table table-bordered">
+					<tr>
+						<th width="40%"><h:outputText value="#{msgs.sender}"></h:outputText></th>
+						<td width="40%"><h:outputText value="#{employeeHome.transactionToBeEdited.fromAccountId}"></h:outputText></td>
+					</tr>
+
+					<tr>
+						<th width="40%"><h:outputText value="#{msgs.reciever}"></h:outputText></th>
+						<td width="40%"><h:outputText value="#{employeeHome.transactionToBeEdited.toAccountId}"></h:outputText></td>
+					</tr>
+					<tr>
+						<th width="40%"><h:outputText value="#{msgs.amount}"></h:outputText></th>
+						<td width="40%"><h:outputText value="#{employeeHome.transactionToBeEdited.amount}"></h:outputText></td>
+					</tr>
+					<tr>
+						<th width="40%"><h:outputText value="#{msgs.description}"></h:outputText></th>
+						<td width="40%"><h:outputText value="#{employeeHome.transactionToBeEdited.description}"></h:outputText></td>
+					</tr>
+					<tr>
+						<th width="40%"><h:outputText value="#{msgs.transactionDate}"></h:outputText></th>
+						<td width="40%"><h:outputText value="#{employeeHome.transactionToBeEdited.transactionDate}"></h:outputText></td>
+					</tr>
+				</table>
+				<h:commandButton value="#{msgs.approve}" action="#{employeeHome.approveTransaction()}">
+							<f:ajax render="emplyeeHomeFormId" execute="emplyeeHomeFormId" />
+				</h:commandButton>
+				<h:commandButton value="#{msgs.reject}">
+							<!-- f:ajax render="accountFormId" execute="accountFormId" / -->
+				</h:commandButton>
+			</h:panelGroup>
+		</p:dialog>
+
+
+
+	</h:form>
+</h:body>
+</html>

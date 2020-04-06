@@ -28,6 +28,21 @@ public class BankEmployeeDB implements Serializable {
 			bankEmployee1.setBankId(1L);
 			bankEmployee1.setPassword("123@S");
 			/////////////////////////////////////////
+			bankEmployee2.setId(1L);
+			bankEmployee2.setName("tofa7a");
+			bankEmployee2.setUserName("tofa7a");
+			bankEmployee2.setMobile("01144181789");
+			bankEmployee2.setPosition("manager");
+			bankEmployee2.setBankId(1L);
+			bankEmployee2.setPassword("123@S");
+			////////////////////////
+			bankEmployee3.setId(2L);
+			bankEmployee3.setName("sokynana");
+			bankEmployee3.setUserName("sokynana");
+			bankEmployee3.setMobile("01144181789");
+			bankEmployee3.setPosition("accountant");
+			bankEmployee3.setBankId(1L);
+			bankEmployee3.setPassword("123@S");
 
 			employeeList.add(bankEmployee1);
 			employeeList.add(bankEmployee2);

@@ -13,14 +13,32 @@
 </h:head>
 
 <h:body>
+
+	<nav class="navbar" style="background-color:#76b852">
+	<div class="container-fluid">
+		<h:form>
+			<div class="navbar-header">
+				<ul>
+					<p:graphicImage width="5%" height="5%" name="/images/logo4.png" />
+					<a class="navbar-brand" style="color: white" href="#">Bank</a>
+				</ul>
+			</div>
+			<ul class="nav navbar-nav navbar-right">
+				<li><h:commandLink action="#{employeeHome.logout()}"
+					value="#{msgs.sign_out}" style="color:white">
+					</h:commandLink></li>
+
+			</ul>
+		</h:form>
+	</div>
+	</nav>
+
 	<h:form id="emplyeeHomeFormId">
 
 		<div>
-			<h:commandButton action="#{employeeHome.logout()}" value="Logout"></h:commandButton>
-			<h4>welcome from Employee home,
-				#{employeeHome.employee.userName}</h4>
+			<h4>#{msgs.welcomeHeading} #{employeeHome.employee.userName} !</h4>
 		</div>
-				<div>
+		<div>
 			<table class="table">
 				<thead>
 					<tr>
@@ -34,17 +52,17 @@
 							</div></th>
 						<th><div class="panel panel-primary" style="width: 250px">
 								<div class="panel-heading">#{msgs.totalnumberofTransactions}</div>
-								<div class="panel-body">##{employeeHome.totalNumberOfTransactions}</div>
+								<div class="panel-body">#{employeeHome.totalNumberOfTransactions}</div>
 							</div></th>
 						<th><div class="panel panel-primary" style="width: 250px">
 								<div class="panel-heading">#{msgs.totalnumberofPendingTransactions}</div>
 								<div class="panel-body">#{employeeHome.totalNumberOfPendingTransactions}</div>
 							</div></th>
-							<th><div class="panel panel-primary" style="width: 250px">
+						<th><div class="panel panel-primary" style="width: 250px">
 								<div class="panel-heading">#{msgs.totalNumberOfTransactionsSubmitedByCurrentEmployee}</div>
 								<div class="panel-body">#{employeeHome.totalNumberOfTransactionsSubmitedByCurrentEmployee}</div>
 							</div></th>
-							<th><div class="panel panel-primary" style="width: 250px">
+						<th><div class="panel panel-primary" style="width: 250px">
 								<div class="panel-heading">#{msgs.myPerformance}</div>
 								<div class="panel-body">#{employeeHome.performanceRatio}%</div>
 							</div></th>
@@ -60,46 +78,57 @@
 			captionStyle="font-size: 0.95em; font-style:italic"
 			style="width: 800px;color: black" class="table table-bordered">
 
-			<f:facet name="caption">Transactions</f:facet>
+			<f:facet name="caption">#{msgs.transactions}</f:facet>
 
 
 			<!-- desc -->
-			<p:column filterBy="#{row.description}" headerText="Id"  filterMatchMode="contains" headerClass="columnHeader" footerClass="columnFooter">
-				<f:facet name="header">Description</f:facet>
+			<p:column filterBy="#{row.description}" headerText="Id"
+				filterMatchMode="contains" headerClass="columnHeader"
+				footerClass="columnFooter">
+				<f:facet name="header">#{msgs.description}</f:facet>
 				<h:outputText value="#{row.description}" />
 			</p:column>
 
 
 			<!-- fromAccountId -->
 			<p:column headerClass="columnHeader" footerClass="columnFooter">
-				<f:facet name="header">Sender Account Number</f:facet>
+				<f:facet name="header">#{msgs.sender}</f:facet>
 				<h:outputText value="#{row.fromAccountId}" />
 			</p:column>
 
 			<!-- toAccountId -->
 			<p:column headerClass="columnHeader" footerClass="columnFooter">
-				<f:facet name="header">Reciever Account Number</f:facet>
+				<f:facet name="header">#{msgs.reciever}</f:facet>
 				<h:outputText value="#{row.toAccountId}" />
 			</p:column>
 
 			<!-- Amount -->
 			<p:column headerClass="columnHeader" footerClass="columnFooter">
-				<f:facet name="header">Amount</f:facet>
+				<f:facet name="header">#{msgs.amount}</f:facet>
 				<h:outputText value="#{row.amount}" />
 			</p:column>
 
 			<!-- Status -->
-			<p:column filterBy="#{row.status}" headerText="Id"  filterMatchMode="contains" headerClass="columnHeader" footerClass="columnFooter">
-				<f:facet name="header">Status</f:facet>
+			<p:column filterBy="#{row.status}" headerText="Id"
+				filterMatchMode="contains" headerClass="columnHeader"
+				footerClass="columnFooter">
+				<f:facet name="header">#{msgs.status}</f:facet>
 				<h:outputText value="#{row.status}" />
+			</p:column>
+
+			<!-- Date -->
+			<p:column headerClass="columnHeader" footerClass="columnFooter">
+				<f:facet name="header">#{msgs.transactionDate}</f:facet>
+				<h:outputText value="#{row.transactionDate}" />
 			</p:column>
 
 			<!-- EditStatus -->
 			<p:column headerClass="columnHeader" footerClass="columnFooter">
 				<f:facet name="header">EditStatus</f:facet>
-				<h:commandButton value="#{msgs.edit}" disabled="#{row.status != 'Pending'}"
+				<h:commandButton value="#{msgs.edit}"
+					disabled="#{row.status != 'Pending'}"
 					action="#{employeeHome.selectedTransaction(row)}" class="btn">
-					<f:ajax render="emplyeeHomeFormId"	
+					<f:ajax render="emplyeeHomeFormId"
 						onevent="function(e){if(e.status == 'success') PF('transactionDialog').show();}"></f:ajax>
 				</h:commandButton>
 			</p:column>
@@ -116,31 +145,38 @@
 				<table width="100%" class="table table-bordered">
 					<tr>
 						<th width="40%"><h:outputText value="#{msgs.sender}"></h:outputText></th>
-						<td width="40%"><h:outputText value="#{employeeHome.transactionToBeEdited.fromAccountId}"></h:outputText></td>
+						<td width="40%"><h:outputText
+								value="#{employeeHome.transactionToBeEdited.fromAccountId}"></h:outputText></td>
 					</tr>
 
 					<tr>
 						<th width="40%"><h:outputText value="#{msgs.reciever}"></h:outputText></th>
-						<td width="40%"><h:outputText value="#{employeeHome.transactionToBeEdited.toAccountId}"></h:outputText></td>
+						<td width="40%"><h:outputText
+								value="#{employeeHome.transactionToBeEdited.toAccountId}"></h:outputText></td>
 					</tr>
 					<tr>
 						<th width="40%"><h:outputText value="#{msgs.amount}"></h:outputText></th>
-						<td width="40%"><h:outputText value="#{employeeHome.transactionToBeEdited.amount}"></h:outputText></td>
+						<td width="40%"><h:outputText
+								value="#{employeeHome.transactionToBeEdited.amount}"></h:outputText></td>
 					</tr>
 					<tr>
 						<th width="40%"><h:outputText value="#{msgs.description}"></h:outputText></th>
-						<td width="40%"><h:outputText value="#{employeeHome.transactionToBeEdited.description}"></h:outputText></td>
+						<td width="40%"><h:outputText
+								value="#{employeeHome.transactionToBeEdited.description}"></h:outputText></td>
 					</tr>
 					<tr>
 						<th width="40%"><h:outputText value="#{msgs.transactionDate}"></h:outputText></th>
-						<td width="40%"><h:outputText value="#{employeeHome.transactionToBeEdited.transactionDate}"></h:outputText></td>
+						<td width="40%"><h:outputText
+								value="#{employeeHome.transactionToBeEdited.transactionDate}"></h:outputText></td>
 					</tr>
 				</table>
-				<h:commandButton value="#{msgs.approve}" action="#{employeeHome.approveTransaction()}">
-							<f:ajax render="emplyeeHomeFormId" execute="emplyeeHomeFormId" />
+				<h:commandButton value="#{msgs.approve}"
+					action="#{employeeHome.approveTransaction()}">
+					<f:ajax render="emplyeeHomeFormId" execute="emplyeeHomeFormId" />
 				</h:commandButton>
-				<h:commandButton value="#{msgs.reject}" action="#{employeeHome.rejectTransaction()}">
-							<f:ajax render="emplyeeHomeFormId" execute="emplyeeHomeFormId" />
+				<h:commandButton value="#{msgs.reject}"
+					action="#{employeeHome.rejectTransaction()}">
+					<f:ajax render="emplyeeHomeFormId" execute="emplyeeHomeFormId" />
 				</h:commandButton>
 			</h:panelGroup>
 		</p:dialog>

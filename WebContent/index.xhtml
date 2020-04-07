@@ -43,12 +43,11 @@
 						<p:password id="passId" placeholder="password" style="color:white"
 							value="#{user.password}" class="text"></p:password>
 						<p:tooltip for="passId" value="please no space" />
-						<h:commandButton value="Login" action="#{user.login()}"></h:commandButton>
+						<h:commandButton value="#{msgs.login}" action="#{user.login()}"></h:commandButton>
 					</h:panelGroup>
 				</h:form>
 				<p>
-					Don't have an Account? <a href="/EjadaBank/sign.xhtml"> Signup
-						Now!</a>
+					#{msgs.not_a_user_signup} <a href="/EjadaBank/sign.xhtml"> #{msgs.sign_up_now}</a>
 				</p>
 			</div>
 		</div>

@@ -131,5 +131,14 @@ public class AccountService implements Serializable {
 		oldAccount.setBalance(oldAccount.getBalance() + t.getAmount());
 		updateAccount(oldAccount);
 	}
-
+	
+	public static boolean isRecieverAccountNumberInDb(Long recieverId)
+	{
+		for(Account a: AccountDB.getAccountList())
+		{
+			if(a.getId().equals(recieverId) )
+				return true;
+		}
+		return false;
+	}
 }

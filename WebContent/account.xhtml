@@ -24,7 +24,6 @@
 				<li><h:commandLink value="#{msgs.sign_out}"
 						action="#{account.logout()}" style="color:white">
 					</h:commandLink></li>
-
 			</ul>
 		</h:form>
 	</div>
@@ -38,7 +37,6 @@
 			<table class="table">
 				<thead>
 					<tr>
-
 						<th><div class="panel panel-default" style="width: 350px">
 								<div class="panel-heading">#{msgs.accountNumber}</div>
 								<div class="panel-body">#{account.account.id}</div>
@@ -52,7 +50,13 @@
 								<div class="panel-body">#{account.account.availableBalance}</div>
 							</div></th>
 						<th><div class="panel panel-default" style="width: 350px">
-								<div class="panel-heading">#{msgs.salary}</div>
+								<div class="panel-heading">
+									<h:commandLink value="#{msgs.salary}" id="editSalaryId" class="btn" style="height:20px">
+										<f:ajax render="accountFormId"
+											onevent="function(e){if(e.status == 'success') PF('salaryDialog').show();}"></f:ajax>
+									</h:commandLink>
+									<p:tooltip for="editSalaryId" value="Click to update your salary!" />
+								</div>
 								<div class="panel-body">#{account.client.netSalary}</div>
 							</div></th>
 					</tr>
@@ -98,48 +102,76 @@
 				</table>
 			</h:panelGroup>
 		</p:dialog>
+
+		<p:dialog header="#{msgs.updateSalary}" id="salaryDialogId"
+			widgetVar="salaryDialog" modal="true" width="600px" minHeight="220">
+			<h:panelGroup id="salaryPanelGroupId">
+				<table width="100%">
+					<tr>
+						<th width="40%">#{msgs.salary} :</th>
+						<td width="40%"><h:inputText
+								value="#{account.client.netSalary}"></h:inputText></td>
+					</tr>
+					
+				</table>
+					<h:commandButton value="#{msgs.save}" class="btn btn-primary">
+							<f:ajax render="accountFormId" execute="accountFormId" />
+						</h:commandButton>
+					
+			</h:panelGroup>
+		</p:dialog>
+
+
 		<!-- the table  -->
 		<h:dataTable id="transactionTable" class="table table-bordered"
 			value="#{account.transactionList}" var="row"
 			captionStyle="font-size: 1.5em; font-style:italic"
 			style="width: 100%;color: black;">
 
-			<f:facet name="caption">Transactions</f:facet>
+			<f:facet name="caption">#{msgs.transactions}</f:facet>
 
 
 			<!-- desc -->
 			<h:column headerClass="columnHeader" footerClass="columnFooter">
-				<f:facet name="header">Description</f:facet>
+				<f:facet name="header">#{msgs.description}</f:facet>
 				<h:outputText value="#{row.description}" />
 			</h:column>
 
 
 			<!-- fromAccountId -->
 			<h:column headerClass="columnHeader" footerClass="columnFooter">
-				<f:facet name="header">Sender Account Number</f:facet>
+				<f:facet name="header">#{msgs.sender}</f:facet>
 				<h:outputText value="#{row.fromAccountId}" />
 			</h:column>
 
 			<!-- toAccountId -->
 			<h:column headerClass="columnHeader" footerClass="columnFooter">
-				<f:facet name="header">Reciever Account Number</f:facet>
+				<f:facet name="header">#{msgs.reciever}</f:facet>
 				<h:outputText value="#{row.toAccountId}" />
 			</h:column>
 
 			<!-- Amount -->
 			<h:column headerClass="columnHeader" footerClass="columnFooter">
-				<f:facet name="header">Amount</f:facet>
+				<f:facet name="header">#{msgs.amount}</f:facet>
 				<h:outputText value="#{row.amount}" />
 			</h:column>
 
 			<!-- Status -->
 			<h:column headerClass="columnHeader" footerClass="columnFooter">
-				<f:facet name="header">Status</f:facet>
+				<f:facet name="header">#{msgs.status}</f:facet>
 				<h:outputText value="#{row.status}" />
 			</h:column>
 
-		</h:dataTable>
+			<!-- Date -->
+			<h:column headerClass="columnHeader" footerClass="columnFooter">
+				<f:facet name="header">#{msgs.transactionDate}</f:facet>
+				<h:outputText value="#{row.transactionDate}" />
+			</h:column>
 
+		</h:dataTable>
+		<h:commandButton class="btn" value="Report"
+			action="#{account.generateReport()}">
+		</h:commandButton>
 	</h:form>
 </h:body>
 </html>

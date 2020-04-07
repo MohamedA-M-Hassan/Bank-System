@@ -1,6 +1,8 @@
 package instead.of.db;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import zglola.db.Transaction;
 
@@ -23,6 +25,7 @@ public class TransactionDB {
 		transaction.setToAccountId(0L);
 		transaction.setFromAccountId(2L);
 		transaction.setAmount(150L);
+		transaction.setTransactionDate(new Date());
 		
 		transactionList.add(transaction);
 		
@@ -34,6 +37,7 @@ public class TransactionDB {
 		transaction2.setToAccountId(2L);
 		transaction2.setFromAccountId(0L);
 		transaction2.setAmount(300L);
+		transaction2.setTransactionDate(Calendar.getInstance().getTime());
 		transactionList.add(transaction2);
 
 		Transaction transaction3 = new Transaction();
@@ -44,6 +48,7 @@ public class TransactionDB {
 		transaction3.setToAccountId(2L);
 		transaction3.setFromAccountId(1L);
 		transaction3.setAmount(300L);
+		transaction3.setTransactionDate(Calendar.getInstance().getTime());
 		transactionList.add(transaction3);
 		}
 		return transactionList;

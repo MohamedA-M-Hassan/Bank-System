@@ -47,7 +47,7 @@ public class EmployeeHomeBean implements Serializable {
 		this.performanceRatio = 100 * ((float) this.totalNumberOfTransactionsSubmitedByCurrentEmployee
 				/ (float) this.totalNumberOfTransactions);
 	}
-
+	
 	public String logout() {
 
 		HttpSession session = SessionUtils.getSession();

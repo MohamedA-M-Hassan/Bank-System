@@ -20,15 +20,15 @@
 				<f:selectItem itemValue="ar" itemLabel="Arabic" />
 			</h:selectOneMenu>
 		</div>
-	</h:form>
-	<div class="main-w3layouts">
-		<div style="text-align: center;">
-			<p:graphicImage width="5%" height="5%" name="/images/logo4.png" />
-		</div>
-		<h1>Banking System</h1>
-		<div class="main-agileinfo">
-			<div class="agileits-top">
-				<h:form>
+		<div class="main-w3layouts">
+			<div style="text-align: center;">
+				<p:graphicImage width="5%" height="5%" name="/images/logo4.png" />
+			</div>
+
+			<h1>Banking System</h1>
+			<div class="main-agileinfo">
+				<div class="agileits-top">
+
 					<p:messages id="msgs" />
 					<h:panelGroup columns="2">
 						<h:outputText value="#{msgs.username}" style="color:white"></h:outputText>
@@ -45,12 +45,14 @@
 						<p:tooltip for="passId" value="please no space" />
 						<h:commandButton value="#{msgs.login}" action="#{user.login()}"></h:commandButton>
 					</h:panelGroup>
-				</h:form>
-				<p>
-					#{msgs.not_a_user_signup} <a href="/EjadaBank/sign.xhtml"> #{msgs.sign_up_now}</a>
-				</p>
+					<p>
+						#{msgs.not_a_user_signup}
+						<h:commandLink value="#{msgs.sign_up_now}" action="sign">
+						</h:commandLink>
+					</p>
+				</div>
 			</div>
 		</div>
-	</div>
+	</h:form>
 </body>
 </html>

@@ -43,6 +43,15 @@ public class AccountBean implements Serializable {
 	private ArrayList<Transaction> transactionList;
 	// private ArrayList<Transaction> transactionListToDisply;
 	private Transaction transaction;
+	private Long netSalary;
+
+	public Long getNetSalary() {
+		return netSalary;
+	}
+
+	public void setNetSalary(Long netSalary) {
+		this.netSalary = netSalary;
+	}
 
 	public AccountBean() {
 		HttpSession session = SessionUtils.getSession();
@@ -59,16 +68,19 @@ public class AccountBean implements Serializable {
 		transaction = new Transaction();
 	}
 
-	public void editSalary(Long salary) {
 
-	}
-
+	
+	public void updateSalary()
+	{
+		client.setNetSalary(this.netSalary);
+	}	
+	
 	public void addTransaction() {
 		transaction.setFromAccountId(this.account.getId());
 		transaction.setTransactionDate(new Date());
 		
-		if (!isRecieverAccountNumberInDb(transaction.getToAccountId())) {
-			transaction.setToAccountId(-1000L);
+		if (!isRecieverAccountNumberInDb(transaction.getToAccountId()) || (transaction.getAmount() > account.getAvailableBalance()) ) {
+		//	transaction.setToAccountId(-1000L);
 			transaction.setStatus("Rejected");
 		
 		} 
@@ -97,6 +109,23 @@ public class AccountBean implements Serializable {
 
 		return false;
 	}
+	public void generateReport() throws ClassNotFoundException, SQLException, JRException {
+
+		System.out.println(FacesContext.getCurrentInstance().getExternalContext().getRequestLocale());
+		//if(FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
+		String sourceFileName = "C:/Users/mamohamed/report9.jrxml";
+		String outFileName = "D:/all training/"+client.getUserName()+"transactions.pdf";
+		//String outFileName = "D:/all training/transactions.pdf";
+		JasperDesign jasDesign = JRXmlLoader.load(sourceFileName);
+		Map parameters = new HashMap();
+		JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(transactionList);
+		parameters.put("clientName", client.getName());
+		JasperReport jr = JasperCompileManager.compileReport(jasDesign);
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jr, parameters, beanColDataSource);
+		JasperExportManager.exportReportToPdfFile(jasperPrint, outFileName);
+		//*/
+		}
+		
 
 	public String logout() {
 
@@ -138,7 +167,7 @@ public class AccountBean implements Serializable {
 	 * transactionListToDisply) { this.transactionListToDisply =
 	 * transactionListToDisply; }
 	 */
-
+/*
 	public void generateReport() throws ClassNotFoundException, SQLException, JRException {
 
 		String sourceFileName = "C:\\Users\\mamohamed\\report7.jrxml";
@@ -153,9 +182,10 @@ public class AccountBean implements Serializable {
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jr, parameters, new JREmptyDataSource());
 		JasperExportManager.exportReportToPdfFile(jasperPrint, outFileName);
 	}
-
-	public Transaction getTransaction() {
+*/
+		public Transaction getTransaction() {
 		return transaction;
+		
 	}
 
 	public void setTransaction(Transaction transaction) {

@@ -57,6 +57,8 @@ public class UserValidation implements Serializable {
 	}
 
 	public static boolean isValidPhoneNumber(String phoneNo) {
+		if (!((phoneNo.length() >= 10)))
+			return false;
 		if (phoneNo == null || phoneNo.trim().equals(""))
 			return false;
 		for (int i = 0; i < phoneNo.length(); i++) {
@@ -153,7 +155,7 @@ public class UserValidation implements Serializable {
 
 	public static boolean errorMobileMsg() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage(null, new FacesMessage("Mobile is erquired with numbers only!"));
+		context.addMessage(null, new FacesMessage("Please enter valid phone!"));
 		return false;
 	}
 

@@ -14,9 +14,9 @@
 
 <h:body>
 
-	<nav class="navbar" style="background-color:#76b852">
-	<div class="container-fluid">
-		<h:form>
+	<h:form id="emplyeeHomeFormId">
+		<nav class="navbar" style="background-color:#76b852">
+		<div class="container-fluid">
 			<div class="navbar-header">
 				<ul>
 					<p:graphicImage width="5%" height="5%" name="/images/logo4.png" />
@@ -25,15 +25,12 @@
 			</div>
 			<ul class="nav navbar-nav navbar-right">
 				<li><h:commandLink action="#{employeeHome.logout()}"
-					value="#{msgs.sign_out}" style="color:white">
+						value="#{msgs.sign_out}" style="color:white">
 					</h:commandLink></li>
 
 			</ul>
-		</h:form>
-	</div>
-	</nav>
-
-	<h:form id="emplyeeHomeFormId">
+		</div>
+		</nav>
 
 		<div>
 			<h4>#{msgs.welcomeHeading} #{employeeHome.employee.userName} !</h4>
@@ -124,7 +121,7 @@
 
 			<!-- EditStatus -->
 			<p:column headerClass="columnHeader" footerClass="columnFooter">
-				<f:facet name="header">EditStatus</f:facet>
+				<f:facet name="header">#{msgs.editStatus}</f:facet>
 				<h:commandButton value="#{msgs.edit}"
 					disabled="#{row.status != 'Pending'}"
 					action="#{employeeHome.selectedTransaction(row)}" class="btn">
@@ -132,13 +129,9 @@
 						onevent="function(e){if(e.status == 'success') PF('transactionDialog').show();}"></f:ajax>
 				</h:commandButton>
 			</p:column>
-
-
-
 		</p:dataTable>
 
-
-		<p:dialog header="#{msgs.newTransaction}" id="transactionDialogId"
+		<p:dialog header="#{msgs.editStatus}" id="transactionDialogId"
 			widgetVar="transactionDialog" modal="true" width="600px"
 			minHeight="220">
 			<h:panelGroup id="transactionPanelGroupId">
@@ -148,7 +141,6 @@
 						<td width="40%"><h:outputText
 								value="#{employeeHome.transactionToBeEdited.fromAccountId}"></h:outputText></td>
 					</tr>
-
 					<tr>
 						<th width="40%"><h:outputText value="#{msgs.reciever}"></h:outputText></th>
 						<td width="40%"><h:outputText

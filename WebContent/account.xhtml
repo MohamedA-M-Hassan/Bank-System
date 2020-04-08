@@ -5,7 +5,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
 	<title>Account</title>
@@ -13,7 +14,6 @@
 </h:head>
 
 <h:body>
-
 	<nav class="navbar" style="background-color:#76b852">
 	<div class="container-fluid">
 		<h:form>
@@ -31,7 +31,9 @@
 	<h:form id="accountFormId">
 
 		<div>
+
 			<h4 style="font-style: italic">Welcome #{account.client.name}!</h4>
+
 		</div>
 		<div>
 			<table class="table">
@@ -51,19 +53,21 @@
 							</div></th>
 						<th><div class="panel panel-default" style="width: 350px">
 								<div class="panel-heading">
-									<h:commandLink value="#{msgs.salary}" id="editSalaryId" class="btn" style="height:20px">
+									<h:commandLink value="#{msgs.salary}" id="editSalaryId"
+										class="btn" style="height:20px">
 										<f:ajax render="accountFormId"
 											onevent="function(e){if(e.status == 'success') PF('salaryDialog').show();}"></f:ajax>
 									</h:commandLink>
-									<p:tooltip for="editSalaryId" value="Click to update your salary!" />
+									<p:tooltip for="editSalaryId"
+										value="Click to update your salary!" />
 								</div>
 								<div class="panel-body">#{account.client.netSalary}</div>
 							</div></th>
 					</tr>
 				</thead>
-
 			</table>
 		</div>
+
 		<div>
 			<h:commandButton value="#{msgs.newTransaction} " class="btn"
 				action="#{account.dialogTransaction()}">
@@ -76,30 +80,29 @@
 			widgetVar="transactionDialog" modal="true" width="600px"
 			minHeight="220">
 			<h:panelGroup id="transactionPanelGroupId">
-				<table width="100%">
+				<table width="100%" class="table table-bordered">
 					<tr>
-						<th width="40%">#{msgs.reciever} :</th>
-						<td width="40%"><h:inputText
+						<th width="40%">#{msgs.reciever}*</th>
+						<td width="40%"><h:inputText required="true"
 								value="#{account.transaction.toAccountId}"></h:inputText></td>
 					</tr>
 					<tr>
-						<th width="40%">#{msgs.amount} :</th>
-						<td width="40%"><h:inputText
+						<th width="40%">#{msgs.amount}*</th>
+						<td width="40%"><h:inputText required="true"
 								value="#{account.transaction.amount}"></h:inputText></td>
-
 					</tr>
 					<tr>
-						<th width="40%">#{msgs.description} :</th>
-						<td width="40%"><h:inputText
+						<th width="40%">#{msgs.description}*</th>
+						<td width="40%"><h:inputText required="true"
 								value="#{account.transaction.description}"></h:inputText></td>
 					</tr>
-					<tr>
-						<h:commandButton value="#{msgs.save}"
-							action="#{account.addTransaction()}">
-							<f:ajax render="accountFormId" execute="accountFormId" />
-						</h:commandButton>
-					</tr>
 				</table>
+				<h:commandButton class="btn btn-primary" value="#{msgs.save}"
+					action="#{account.addTransaction()}">
+					<f:ajax render="accountFormId" execute="accountFormId"
+						onevent="function(e){if(e.status != 'success') PF('transactionDialog').show();}"></f:ajax>
+				</h:commandButton>
+
 			</h:panelGroup>
 		</p:dialog>
 
@@ -109,15 +112,17 @@
 				<table width="100%">
 					<tr>
 						<th width="40%">#{msgs.salary} :</th>
-						<td width="40%"><h:inputText
-								value="#{account.client.netSalary}"></h:inputText></td>
+						<td width="40%"><h:inputText value="#{account.netSalary}"></h:inputText></td>
 					</tr>
 					
 				</table>
-					<h:commandButton value="#{msgs.save}" class="btn btn-primary">
-							<f:ajax render="accountFormId" execute="accountFormId" />
-						</h:commandButton>
-					
+				<p:spacer />
+				<h2></h2>
+				<h:commandButton value="#{msgs.save}" class="btn btn-primary"
+					action="#{account.updateSalary()}">
+					<f:ajax render="accountFormId" execute="accountFormId" />
+				</h:commandButton>
+		
 			</h:panelGroup>
 		</p:dialog>
 
@@ -169,8 +174,9 @@
 			</h:column>
 
 		</h:dataTable>
-		<h:commandButton class="btn" value="Report"
-			action="#{account.generateReport()}">
+		<h:commandButton value="#{msgs.extractReport} "
+			class="btn btn-primary" action="#{account.generateReport()}">
+			<f:ajax render="accountFormId"></f:ajax>
 		</h:commandButton>
 	</h:form>
 </h:body>

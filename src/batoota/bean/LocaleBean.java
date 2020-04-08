@@ -1,5 +1,6 @@
 package batoota.bean;
 
+import java.io.Serializable;
 import java.util.Locale;
 
 import javax.annotation.PostConstruct;
@@ -9,7 +10,7 @@ import javax.faces.context.FacesContext;
 
 @SessionScoped
 @ManagedBean(name = "localeBean")
-public class LocaleBean {
+public class LocaleBean implements Serializable {
 
 	private Locale locale;
 	private String lang;

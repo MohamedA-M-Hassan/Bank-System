@@ -1,7 +1,6 @@
 <?xml version = "1.0" encoding = "UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -10,22 +9,22 @@
 	<title>Banking System</title>
 	<h:outputStylesheet library="css" name="bootstrap.css" />
 	<h:outputStylesheet library="css" name="signup.css" />
-
 </h:head>
 <body>
-	<div class="main-w3layouts">
-		<div style="text-align: center;">
-			<p:graphicImage width="5%" height="5%" name="/images/logo4.png" />
-		</div>
-		<h1>Sign up</h1>
-		<div class="main-agileinfo">
-			<div class="agileits-top">
-				<h:form id="select">
+	<h:form id="select">
+		<div class="main-w3layouts">
+			<div style="text-align: center;">
+				<p:graphicImage width="5%" height="5%" name="/images/logo4.png" />
+			</div>
+			<h1>#{msgs.signup}</h1>
+			<div class="main-agileinfo">
+				<div class="agileits-top">
 					<p:messages id="msgs" />
 					<h:selectOneRadio value="#{user.type}" id="userRadio"
 						style="color:white">
-						<f:selectItem itemValue="1" itemLabel="Client" style="color:white" />
-						<f:selectItem itemValue="2" itemLabel="Employee"
+						<f:selectItem itemValue="1" itemLabel="#{msgs.client}"
+							style="color:white" />
+						<f:selectItem itemValue="2" itemLabel="#{msgs.employee}"
 							style="color:white" />
 						<f:ajax event="change" listener="#{user.reset()}" render="select"
 							execute="select" />
@@ -55,13 +54,11 @@
 							value="#{user.client.password}" class="text" id="clientPass"></p:password>
 						<p:tooltip for="clientPass"
 							value="no space,1 capital , 1 small letter, 1 symbol, total 8 characters or more" />
-
 						<p:spacer />
 						<h2></h2>
 						<h:outputText value="#{msgs.mail}" style="color:white"></h:outputText>
 						<p:inputText id="email" style="color:white"
 							value="#{user.client.mail}" placeholder="Mail" class="text">
-
 						</p:inputText>
 						<p:spacer />
 						<h2></h2>
@@ -75,7 +72,6 @@
 							value="#{user.client.mobile}" placeholder="Mobile Number"
 							class="text"></p:inputText>
 						<p:tooltip for="clientPhone" value="Only numbers" />
-
 						<h:commandButton value="Signup" action="#{user.addClient()}"></h:commandButton>
 					</h:panelGroup>
 
@@ -98,7 +94,6 @@
 							class="text"></p:password>
 						<p:tooltip for="empPass"
 							value="no space,1 capital , 1 small letter, 1 symbol,total 8 characters or more" />
-
 						<p:spacer />
 						<h2></h2>
 						<h:outputText value="#{msgs.position}" style="color:white"></h:outputText>
@@ -114,23 +109,22 @@
 						<p:spacer />
 						<h2></h2>
 						<h:outputText value="#{msgs.phone_no}" style="color:white"></h:outputText>
-						<p:inputText  id="empPhone" style="color:white"
+						<p:inputText id="empPhone" style="color:white"
 							value="#{user.bankEmployee.mobile}" placeholder="Mobile Number"
 							class="text"></p:inputText>
 						<p:tooltip for="empPhone" value="Only numbers" />
-
-						<h:commandButton value="Signup" action="#{user.addBankEmployee()}"></h:commandButton>
+						<h:commandButton value="#{msgs.signup}"
+							action="#{user.addBankEmployee()}"></h:commandButton>
 					</h:panelGroup>
-				</h:form>
-				<p>
-					You have an Account? <a href="/EjadaBank/index.xhtml"> Login
-						Now!</a>
-				</p>
+					<p>
+						#{msgs.youhaveAnAccount}
+						<h:commandLink value="#{msgs.login_now}" action="index">
+						</h:commandLink>
+					</p>
+				</div>
 			</div>
 		</div>
-	</div>
+	</h:form>
 
 </body>
-
-
 </html>

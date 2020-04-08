@@ -15,26 +15,29 @@
 
 <h:body>
 	<h:form id="accountFormId">
-		
+
 
 		<nav class="navbar" style="background-color:#76b852">
-		<div class="container-fluid">
-			<h:selectOneMenu value="#{account.locale.language}" onchange="submit()">
-					<f:selectItem itemValue="en" itemLabel="English" />
-					<f:selectItem itemValue="ar" itemLabel="Arabic" />
-				</h:selectOneMenu>
-			<h:outputText value="#{localeBean.language}" ></h:outputText>
-			<div class="navbar-header">
-				<a class="navbar-brand" style="color: white" href="#">Bank</a>
-			</div>
-			
-				
-			<ul class="nav navbar-nav navbar-right">
-				<li><h:commandLink value="#{msgs.sign_out}"
-						action="#{account.logout()}" style="color:white">
-					</h:commandLink></li>
-			</ul>
-		</div>
+		<table>
+			<thead>
+				<tr>
+					<th><a class="navbar-brand" style="color: white" href="#">Bank</a></th>
+					<td><h:selectOneMenu value="#{account.locale.language}"
+							onchange="submit()">
+							<f:selectItem itemValue="en" itemLabel="English" />
+							<f:selectItem itemValue="ar" itemLabel="Arabic" />
+						</h:selectOneMenu></td>
+					<td><h:commandLink
+							value="#{msgs.sign_out}" action="#{account.logout()}"
+							style="color:white">
+						</h:commandLink></td>
+				</tr>
+			</thead>
+		</table>
+
+
+
+
 		</nav>
 
 		<div>
@@ -175,7 +178,6 @@
 				<f:facet name="header">#{msgs.transactionDate}</f:facet>
 				<h:outputText value="#{row.transactionDate}" />
 			</h:column>
-
 		</h:dataTable>
 		<h:commandButton value="#{msgs.extractReport} "
 			class="btn btn-primary" action="#{account.generateReport()}">

@@ -9,6 +9,8 @@
 	<title>Banking System</title>
 	<h:outputStylesheet library="css" name="bootstrap.css" />
 	<h:outputStylesheet library="css" name="signup.css" />
+	  <h:outputScript library="javascript" name="validation.js"/>
+
 </h:head>
 <body>
 	<h:form id="select">
@@ -38,74 +40,72 @@
 					</h:selectOneRadio>
 
 					<!-- Client -->
-					<h:panelGroup columns="2" id="client" rendered="#{user.type == 1}">
+					<h:panelGroup columns="2" id="client">
+
+
 						<h:outputText value="#{msgs.name}" style="color:white"></h:outputText>
+						<!-- Client -->
 						<p:inputText value="#{user.client.name}" placeholder="Name"
-							class="text">
+							class="text" rendered="#{user.type == 1}">
 						</p:inputText>
+						<!-- Emp -->
+						<p:inputText style="color:white" value="#{user.bankEmployee.name}"
+							placeholder="Name" class="text" rendered="#{user.type == 2}"></p:inputText>
+
 						<p:spacer />
 						<h2></h2>
 						<p:spacer />
 						<h2></h2>
+						<!-- Client  and Emp -->
 						<h:outputText value="#{msgs.username}" style="color:white"></h:outputText>
 						<p:inputText style="color:white" value="#{user.client.userName}"
-							placeholder="Username" class="text"></p:inputText>
+							placeholder="Username" class="text" rendered="#{user.type == 1}"></p:inputText>
+						<p:inputText style="color:white"
+							value="#{user.bankEmployee.userName}" placeholder="Username"
+							class="text" rendered="#{user.type == 2}"></p:inputText>
+
 						<p:spacer />
 						<h2></h2>
-						<h:outputText value="#{msgs.birthDate}" style="color:white"></h:outputText>
-						<p:calendar value="#{user.client.birthDate}"></p:calendar>
+
+						<h:outputText value="#{msgs.birthDate}" style="color:white"
+							rendered="#{user.type == 1}"></h:outputText>
+						<p:calendar value="#{user.client.birthDate}"
+							rendered="#{user.type == 1}"></p:calendar>
 						<p:spacer />
 						<h2></h2>
+
 						<h:outputText value="#{msgs.password}" style="color:white"></h:outputText>
 						<p:password placeholder="password" style="color:white"
-							value="#{user.client.password}" class="text" id="clientPass"></p:password>
+							value="#{user.client.password}" class="text" id="clientPass"
+							rendered="#{user.type == 1}"></p:password>
 						<p:tooltip for="clientPass"
 							value="no space,1 capital , 1 small letter, 1 symbol, total 8 characters or more" />
+						<p:password id="empPass" placeholder="password"
+							style="color:white" value="#{user.bankEmployee.password}"
+							class="text" rendered="#{user.type == 2}"></p:password>
+						<p:tooltip for="empPass"
+							value="no space,1 capital , 1 small letter, 1 symbol,total 8 characters or more" />
+
 						<p:spacer />
 						<h2></h2>
-						<h:outputText value="#{msgs.mail}" style="color:white"></h:outputText>
+						<h:outputText value="#{msgs.mail}" style="color:white"
+							rendered="#{user.type == 1}"></h:outputText>
 						<p:inputText id="email" style="color:white"
-							value="#{user.client.mail}" placeholder="Mail" class="text">
+							value="#{user.client.mail}" placeholder="Mail" class="text"
+							rendered="#{user.type == 1}">
 						</p:inputText>
 						<p:spacer />
 						<h2></h2>
-						<h:outputText value="#{msgs.address}" style="color:white"></h:outputText>
+						<h:outputText value="#{msgs.address}" style="color:white"
+							rendered="#{user.type == 1}"></h:outputText>
 						<p:inputText style="color:white" value="#{user.client.address}"
-							placeholder="Address" class="text"></p:inputText>
+							placeholder="Address" class="text" rendered="#{user.type == 1}"></p:inputText>
 						<p:spacer />
 						<h2></h2>
-						<h:outputText value="#{msgs.phone_no}" style="color:white"></h:outputText>
-						<p:inputText id="clientPhone" style="color:white"
-							value="#{user.client.mobile}" placeholder="Mobile Number"
-							class="text"></p:inputText>
-						<p:tooltip for="clientPhone" value="Only numbers" />
-						<h:commandButton value="Signup" action="#{user.addClient()}"></h:commandButton>
-					</h:panelGroup>
-
-					<!-- Emp -->
-					<h:panelGroup columns="2" id="emp" rendered="#{user.type == 2}">
-						<h:outputText value="#{msgs.name}" style="color:white"></h:outputText>
-						<p:inputText style="color:white" value="#{user.bankEmployee.name}"
-							placeholder="Name" class="text"></p:inputText>
-						<p:spacer />
-						<h2></h2>
-						<h:outputText value="#{msgs.username}" style="color:white"></h:outputText>
-						<p:inputText style="color:white"
-							value="#{user.bankEmployee.userName}" placeholder="Username"
-							class="text"></p:inputText>
-						<p:spacer />
-						<h2></h2>
-						<h:outputText value="#{msgs.password}" style="color:white"></h:outputText>
-						<p:password id="empPass" placeholder="password"
-							style="color:white" value="#{user.bankEmployee.password}"
-							class="text"></p:password>
-						<p:tooltip for="empPass"
-							value="no space,1 capital , 1 small letter, 1 symbol,total 8 characters or more" />
-						<p:spacer />
-						<h2></h2>
-						<h:outputText value="#{msgs.position}" style="color:white"></h:outputText>
+						<h:outputText value="#{msgs.position}" style="color:white"
+							rendered="#{user.type == 2}"></h:outputText>
 						<h:selectOneMenu value="#{user.bankEmployee.position}"
-							class="form-control !important">
+							class="form-control !important" rendered="#{user.type == 2}">
 							<f:selectItem itemValue="manager" itemLabel="Manager" />
 							<f:selectItem itemValue="accountant" itemLabel="Accountant" />
 							<f:selectItem itemValue="it" itemLabel="It" />
@@ -115,13 +115,24 @@
 						</h:selectOneMenu>
 						<p:spacer />
 						<h2></h2>
+
 						<h:outputText value="#{msgs.phone_no}" style="color:white"></h:outputText>
+						<p:inputText id="clientPhone" style="color:white"
+							value="#{user.client.mobile}" placeholder="Mobile Number"
+							class="text" rendered="#{user.type == 1}" onkeypress="return checkDigit(event);"></p:inputText>
+						<p:tooltip for="clientPhone" value="Only numbers" />
 						<p:inputText id="empPhone" style="color:white"
 							value="#{user.bankEmployee.mobile}" placeholder="Mobile Number"
-							class="text"></p:inputText>
+							class="text" rendered="#{user.type == 2}"
+							onkeypress="return checkDigit(event);">
+						</p:inputText>
 						<p:tooltip for="empPhone" value="Only numbers" />
+
+						<h:commandButton value="Signup" action="#{user.addClient()}"
+							rendered="#{user.type == 1}"></h:commandButton>
+
 						<h:commandButton value="#{msgs.signup}"
-							action="#{user.addBankEmployee()}"></h:commandButton>
+							action="#{user.addBankEmployee()}" rendered="#{user.type == 2}"></h:commandButton>
 					</h:panelGroup>
 					<p>
 						#{msgs.youhaveAnAccount}

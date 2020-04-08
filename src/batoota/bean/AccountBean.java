@@ -82,26 +82,33 @@ public class AccountBean implements Serializable {
 	}
 
 	public void addTransaction() {
-		transaction.setFromAccountId(this.account.getId());
-		transaction.setTransactionDate(new Date());
-		// if (the reciever not in DB) or if he sends to others and has no charge:
-		// reject
-		if (!isRecieverAccountNumberInDb(transaction.getToAccountId())
-				|| (transaction.getAmount() > account.getAvailableBalance()
-						&& (!transaction.getToAccountId().equals(transaction.getFromAccountId())))) {
-			// transaction.setToAccountId(-1000L);
-			transaction.setStatus("Rejected");
-
-		} else {
-			transaction.setStatus("Pending");
-
-			if (transaction.getToAccountId() != transaction.getFromAccountId())
-				AccountService.handleAccountAvailableBalanceNegative(transaction, account);
-			else
-				AccountService.handleAccountBalancePositive(transaction, account);
+		if (transaction.getToAccountId() == null || transaction.getAmount() == null)
+		{
+			// don't do anything
 		}
-		TransactionService.addTransaction(transaction);
-		transactionList.add(transaction);
+		else
+		{
+			transaction.setFromAccountId(this.account.getId());
+			transaction.setTransactionDate(new Date());
+			// if (the reciever not in DB) or if he sends to others and has no charge:
+			// reject
+			if (!isRecieverAccountNumberInDb(transaction.getToAccountId())
+					|| (transaction.getAmount() > account.getAvailableBalance()
+							&& (!transaction.getToAccountId().equals(transaction.getFromAccountId())))) {
+				// transaction.setToAccountId(-1000L);
+				transaction.setStatus("Rejected");
+
+			} else {
+				transaction.setStatus("Pending");
+
+				if (transaction.getToAccountId() != transaction.getFromAccountId())
+					AccountService.handleAccountAvailableBalanceNegative(transaction, account);
+				else
+					AccountService.handleAccountBalancePositive(transaction, account);
+			}
+			TransactionService.addTransaction(transaction);
+			transactionList.add(transaction);
+		}
 	}
 
 	private boolean isRecieverAccountNumberInDb(Long recieverId) {
@@ -120,12 +127,13 @@ public class AccountBean implements Serializable {
 
 		System.out.println(FacesContext.getCurrentInstance().getExternalContext().getRequestLocale());
 		String sourceFileName;
-		if(locale.getLanguage() == "en")
-			{sourceFileName = "C:/Users/mamohamed/report9.jrxml";}
-		else {
-			 sourceFileName = "C:/Users/mamohamed/report10.jrxml";}
-		String outFileName = "D:/all training/"+client.getUserName()+"transactions.pdf";
-		//String outFileName = "D:/all training/transactions.pdf";
+		if (locale.getLanguage() == "en") {
+			sourceFileName = "C:/Users/mamohamed/report9.jrxml";
+		} else {
+			sourceFileName = "C:/Users/mamohamed/report10.jrxml";
+		}
+		String outFileName = "D:/all training/" + client.getUserName() + "transactions.pdf";
+		// String outFileName = "D:/all training/transactions.pdf";
 		JasperDesign jasDesign = JRXmlLoader.load(sourceFileName);
 		Map parameters = new HashMap();
 		JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(transactionList);
@@ -133,8 +141,8 @@ public class AccountBean implements Serializable {
 		JasperReport jr = JasperCompileManager.compileReport(jasDesign);
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jr, parameters, beanColDataSource);
 		JasperExportManager.exportReportToPdfFile(jasperPrint, outFileName);
-		//*/
-		}
+		// */
+	}
 
 	public String logout() {
 

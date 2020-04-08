@@ -43,7 +43,9 @@ public class AccountBean implements Serializable {
 	private ArrayList<Transaction> transactionList;
 	// private ArrayList<Transaction> transactionListToDisply;
 	private Transaction transaction;
+
 	private Long netSalary;
+	private LocaleBean locale;
 
 	public Long getNetSalary() {
 		return netSalary;
@@ -61,6 +63,7 @@ public class AccountBean implements Serializable {
 		// this.transactionListToDisply
 		// =TransactionService.transactionListToDislpyWithAccountNo(this.transactionList);
 		transaction = new Transaction();
+		this.locale = new LocaleBean();
 
 	}
 
@@ -68,32 +71,35 @@ public class AccountBean implements Serializable {
 		transaction = new Transaction();
 	}
 
+	public void dialogSalary() {
+		this.netSalary = this.client.getNetSalary();
+	}
 
-	
-	public void updateSalary()
-	{
+	public void updateSalary() {
 		client.setNetSalary(this.netSalary);
-	}	
-	
+		System.out.println(
+				"hello from the other side, we are going to test this function to make sure that we are fail in this stage");
+	}
+
 	public void addTransaction() {
 		transaction.setFromAccountId(this.account.getId());
 		transaction.setTransactionDate(new Date());
-		
-		if (!isRecieverAccountNumberInDb(transaction.getToAccountId()) || (transaction.getAmount() > account.getAvailableBalance()) ) {
-		//	transaction.setToAccountId(-1000L);
+		// if (the reciever not in DB) or if he sends to others and has no charge:
+		// reject
+		if (!isRecieverAccountNumberInDb(transaction.getToAccountId())
+				|| (transaction.getAmount() > account.getAvailableBalance()
+						&& (!transaction.getToAccountId().equals(transaction.getFromAccountId())))) {
+			// transaction.setToAccountId(-1000L);
 			transaction.setStatus("Rejected");
-		
-		} 
-		else {
+
+		} else {
 			transaction.setStatus("Pending");
 
 			if (transaction.getToAccountId() != transaction.getFromAccountId())
 				AccountService.handleAccountAvailableBalanceNegative(transaction, account);
 			else
 				AccountService.handleAccountBalancePositive(transaction, account);
-
 		}
-
 		TransactionService.addTransaction(transaction);
 		transactionList.add(transaction);
 	}
@@ -109,11 +115,15 @@ public class AccountBean implements Serializable {
 
 		return false;
 	}
+
 	public void generateReport() throws ClassNotFoundException, SQLException, JRException {
 
 		System.out.println(FacesContext.getCurrentInstance().getExternalContext().getRequestLocale());
-		//if(FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
-		String sourceFileName = "C:/Users/mamohamed/report9.jrxml";
+		String sourceFileName;
+		if(locale.getLanguage() == "en")
+			{sourceFileName = "C:/Users/mamohamed/report9.jrxml";}
+		else {
+			 sourceFileName = "C:/Users/mamohamed/report10.jrxml";}
 		String outFileName = "D:/all training/"+client.getUserName()+"transactions.pdf";
 		//String outFileName = "D:/all training/transactions.pdf";
 		JasperDesign jasDesign = JRXmlLoader.load(sourceFileName);
@@ -125,7 +135,6 @@ public class AccountBean implements Serializable {
 		JasperExportManager.exportReportToPdfFile(jasperPrint, outFileName);
 		//*/
 		}
-		
 
 	public String logout() {
 
@@ -158,6 +167,14 @@ public class AccountBean implements Serializable {
 		this.transactionList = transactionList;
 	}
 
+	public LocaleBean getLocale() {
+		return locale;
+	}
+
+	public void setLocale(LocaleBean locale) {
+		this.locale = locale;
+	}
+
 	/*
 	 * public ArrayList<Transaction> getTransactionListToDisply() { return
 	 * transactionListToDisply; }
@@ -167,25 +184,25 @@ public class AccountBean implements Serializable {
 	 * transactionListToDisply) { this.transactionListToDisply =
 	 * transactionListToDisply; }
 	 */
-/*
-	public void generateReport() throws ClassNotFoundException, SQLException, JRException {
-
-		String sourceFileName = "C:\\Users\\mamohamed\\report7.jrxml";
-		String outFileName = "D:\\all training\\report1.pdf";
-		JasperDesign jasDesign = JRXmlLoader.load(sourceFileName);
-		Map parameters = new HashMap();
-
-		JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(transactionList);
-		parameters.put("transactionDataSource", beanColDataSource);
-		parameters.put("clientName", client.getName());
-		JasperReport jr = JasperCompileManager.compileReport(jasDesign);
-		JasperPrint jasperPrint = JasperFillManager.fillReport(jr, parameters, new JREmptyDataSource());
-		JasperExportManager.exportReportToPdfFile(jasperPrint, outFileName);
-	}
-*/
-		public Transaction getTransaction() {
+	/*
+	 * public void generateReport() throws ClassNotFoundException, SQLException,
+	 * JRException {
+	 * 
+	 * String sourceFileName = "C:\\Users\\mamohamed\\report7.jrxml"; String
+	 * outFileName = "D:\\all training\\report1.pdf"; JasperDesign jasDesign =
+	 * JRXmlLoader.load(sourceFileName); Map parameters = new HashMap();
+	 * 
+	 * JRBeanCollectionDataSource beanColDataSource = new
+	 * JRBeanCollectionDataSource(transactionList);
+	 * parameters.put("transactionDataSource", beanColDataSource);
+	 * parameters.put("clientName", client.getName()); JasperReport jr =
+	 * JasperCompileManager.compileReport(jasDesign); JasperPrint jasperPrint =
+	 * JasperFillManager.fillReport(jr, parameters, new JREmptyDataSource());
+	 * JasperExportManager.exportReportToPdfFile(jasperPrint, outFileName); }
+	 */
+	public Transaction getTransaction() {
 		return transaction;
-		
+
 	}
 
 	public void setTransaction(Transaction transaction) {

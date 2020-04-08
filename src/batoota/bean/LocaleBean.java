@@ -14,7 +14,7 @@ public class LocaleBean implements Serializable {
 
 	private Locale locale;
 	private String lang;
-
+	
 	public String getLang() {
 		return lang;
 	}
@@ -23,8 +23,8 @@ public class LocaleBean implements Serializable {
 		this.lang = lang;
 	}
 
-	@PostConstruct
-	public void init() {
+	
+	 public LocaleBean() {
 		locale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
 	}
 
@@ -39,6 +39,10 @@ public class LocaleBean implements Serializable {
 	public void setLanguage(String language) {
 		locale = new Locale(language);
 		FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
+	}
+
+	public void setLocale(Locale locale) {
+		this.locale = locale;
 	}
 
 }

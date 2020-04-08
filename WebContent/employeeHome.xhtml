@@ -15,8 +15,13 @@
 <h:body>
 
 	<h:form id="emplyeeHomeFormId">
+		
 		<nav class="navbar" style="background-color:#76b852">
 		<div class="container-fluid">
+			<h:selectOneMenu value="#{localeBean.language}" onchange="submit()">
+					<f:selectItem itemValue="en" itemLabel="English" />
+					<f:selectItem itemValue="ar" itemLabel="Arabic" />
+				</h:selectOneMenu>
 			<div class="navbar-header">
 				<ul>
 					<p:graphicImage width="5%" height="5%" name="/images/logo4.png" />

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report9" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2c3dd555-73db-4315-815d-83b5e43c249f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="clientName" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="amount" class="java.lang.Long">
+		<fieldDescription><![CDATA[amount]]></fieldDescription>
+	</field>
+	<field name="status" class="java.lang.String">
+		<fieldDescription><![CDATA[status]]></fieldDescription>
+	</field>
+	<field name="description" class="java.lang.String"/>
+	<field name="transactionDate" class="java.util.Date"/>
+	<field name="fromAccountId" class="java.lang.Long"/>
+	<field name="toAccountId" class="java.lang.Long"/>
+	<title>
+		<band height="70">
+			<line>
+				<reportElement x="0" y="0" width="515" height="1" uuid="a54cc65a-5caa-4f01-b21c-9fb7f1aeaa22"/>
+			</line>
+			<textField isBlankWhenNull="true" bookmarkLevel="1">
+				<reportElement x="0" y="10" width="515" height="30" uuid="e1628efd-2324-4199-b6ff-13bcd4d5b5ab"/>
+				<textElement textAlignment="Center">
+					<font size="22"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{clientName}]]></textFieldExpression>
+				<anchorNameExpression><![CDATA["Title"]]></anchorNameExpression>
+			</textField>
+			<image>
+				<reportElement x="100" y="10" width="51" height="30" uuid="45f8a46a-d989-45f8-8fe2-40ff3191a751"/>
+				<imageExpression><![CDATA["C:/Users/mamohamed/eclipse-workspace/EjadaBank/WebContent/resources/images/logo4.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="23">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="3" width="535" height="15" backcolor="#70A9A9" uuid="af42ed63-e483-424d-8ddf-4f1115014fdd"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="414" y="3" width="121" height="15" uuid="38616dff-d7c5-4575-af5f-4022b46a8f63"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[
+               Country
+            ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="66" y="3" width="136" height="15" uuid="8dce2be4-1f47-4461-a442-808ad0f37958"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="446" y="3" width="89" height="17" uuid="71af299c-a015-4ea5-9c71-0baf668a13d2"/>
+				<textElement>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="214" y="3" width="100" height="20" uuid="6e3a462e-9c85-4be5-946a-6177b2cbcc83"/>
+				<text><![CDATA[Reciever]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="334" y="3" width="100" height="20" uuid="aaf6c11b-f4d9-463d-a73f-b1c8e67c93ce"/>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="535" height="14" backcolor="#E5ECF9" uuid="a164cee2-2d28-430e-96d0-ec47403aa94f"/>
+				<box>
+					<bottomPen lineWidth="0.25" lineColor="#CCCCCC"/>
+				</box>
+				<textElement>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[
+
+            ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="1" width="100" height="15" uuid="5c44b864-233e-4bd5-9593-f4d72da67ace"/>
+				<textElement>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="446" y="0" width="89" height="14" uuid="c15d6d6c-5708-4d5b-80c7-6172bd3d5b11"/>
+				<textElement>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="100" height="16" uuid="a1fc6bb4-615c-466b-a708-dac31719fe90"/>
+				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="314" y="0" width="100" height="16" uuid="23f3337d-4ad5-4184-a8bc-63d5e3ee9d5e"/>
+				<textFieldExpression><![CDATA[$F{transactionDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="216" y="0" width="100" height="16" uuid="0d4048e9-d2ce-4ad0-b9a1-e5ee874893a7"/>
+				<textFieldExpression><![CDATA[$F{toAccountId}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

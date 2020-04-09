@@ -1,5 +1,6 @@
 package batoota.bean;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -9,9 +10,11 @@ import java.util.HashMap;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
+import javax.faces.context.FacesContext;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 //import com.sun.javafx.collections.MappingChange.Map;
 
 import n3na3a.service.AccountService;
@@ -82,12 +85,9 @@ public class AccountBean implements Serializable {
 	}
 
 	public void addTransaction() {
-		if (transaction.getToAccountId() == null || transaction.getAmount() == null)
-		{
+		if (transaction.getToAccountId() == null || transaction.getAmount() == null) {
 			// don't do anything
-		}
-		else
-		{
+		} else {
 			transaction.setFromAccountId(this.account.getId());
 			transaction.setTransactionDate(new Date());
 			// if (the reciever not in DB) or if he sends to others and has no charge:
@@ -123,16 +123,16 @@ public class AccountBean implements Serializable {
 		return false;
 	}
 
-	public void generateReport() throws ClassNotFoundException, SQLException, JRException {
+	public void generateReport2() throws ClassNotFoundException, SQLException, JRException, IOException {
 
-		System.out.println(FacesContext.getCurrentInstance().getExternalContext().getRequestLocale());
 		String sourceFileName;
 		if (locale.getLanguage() == "en") {
 			sourceFileName = "C:/Users/mamohamed/report9.jrxml";
 		} else {
 			sourceFileName = "C:/Users/mamohamed/report10.jrxml";
 		}
-		String outFileName = "D:/all training/" + client.getUserName() + "transactions.pdf";
+		// String outFileName = "D:/all training/" + client.getUserName() +
+		// "transactions.pdf";
 		// String outFileName = "D:/all training/transactions.pdf";
 		JasperDesign jasDesign = JRXmlLoader.load(sourceFileName);
 		Map parameters = new HashMap();
@@ -140,8 +140,42 @@ public class AccountBean implements Serializable {
 		parameters.put("clientName", client.getName());
 		JasperReport jr = JasperCompileManager.compileReport(jasDesign);
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jr, parameters, beanColDataSource);
-		JasperExportManager.exportReportToPdfFile(jasperPrint, outFileName);
-		// */
+		// JasperExportManager.exportReportToPdfFile(jasperPrint, outFileName);
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		HttpServletResponse resp = (HttpServletResponse) context.getExternalContext().getResponse();
+		resp.setContentType("application/x-pdf");
+		resp.setHeader("Content-disposition", "inline; filename=testReport.pdf");
+		final ServletOutputStream outStream = resp.getOutputStream();
+		JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
+		///////////
+
+	}
+
+	public void generateReport() throws ClassNotFoundException, SQLException, JRException, IOException {
+
+		String sourceFileName;
+		if (locale.getLanguage() == "en") {
+			sourceFileName = "C:/Users/mamohamed/report9.jrxml";
+		} else {
+			sourceFileName = "C:/Users/mamohamed/report10.jrxml";
+		}
+
+		JasperDesign jasDesign = JRXmlLoader.load(sourceFileName);
+		Map parameters = new HashMap();
+		JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(transactionList);
+		parameters.put("clientName", client.getName());
+		JasperReport jr = JasperCompileManager.compileReport(jasDesign);
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jr, parameters, beanColDataSource);
+		// if ()
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		HttpServletResponse resp = (HttpServletResponse) context.getExternalContext().getResponse();
+		resp.setContentType("application/x-pdf");
+		resp.setHeader("Content-disposition", "inline; filename=testReport.pdf");
+		final ServletOutputStream outStream = resp.getOutputStream();
+		JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
+
 	}
 
 	public String logout() {
